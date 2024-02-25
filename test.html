@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout com duas áreas</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .left-area {
+            width: 50%;
+            height: 100%;
+            background-color: #f0f0f0; /* Cor de fundo da área esquerda */
+            float: left; /* Alinha à esquerda */
+        }
+        .right-area {
+            width: 50%;
+            height: 100%;
+            background-color: #ccc; /* Cor de fundo da área direita */
+            float: right; /* Alinha à direita */
+        }
+    </style>
+</head>
+<body>
+    <div class="left-area">
+        <!-- Conteúdo da área esquerda -->
+        <h2>Área Esquerda</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero ac ultricies consectetur.</p>
+    </div>
+    <div class="right-area">
+        <!-- Conteúdo da área direita -->
+        <h2>Área Direita</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero ac ultricies consectetur.</p>
+    </div>
+</body>
+</html>

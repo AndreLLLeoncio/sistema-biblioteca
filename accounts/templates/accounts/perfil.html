@@ -1,0 +1,33 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="stylesheet" href="{% static 'accounts/css/base.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+    <link rel="icon" href="data:,">
+    <script src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
+    <title>Document</title>
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            background-color: #22359C;
+        }
+    </style>
+</head>
+<body>
+
+    {% include "accounts/components/navbar.html" %}
+
+
+
+
+
+    
+</body>
+</html>
+

@@ -1,0 +1,59 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'accounts/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+    <link rel="icon" href="data:,">
+    <script src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
+    <title>Document</title>
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            background-color: #22359C;
+        }
+
+        img{
+            max-width: 200px;
+            display: block;
+            margin: 0px auto;
+        }
+        .capa{
+            height:400px;
+            width:300px;
+            {% comment %}background-color:black;{% endcomment %}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    {% include "accounts/components/navbar.html" %}
+
+
+
+        <div class="d-flex flex-row">
+        {% for livro in livros %}
+        <div class='capa'>
+            <a href="{% url 'livro' livro.id %}">
+                <img src="{{ livro.cover.url }}" alt="Capa de {{ livro.nome }}">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+
+
+    
+</body>
+</html>
+

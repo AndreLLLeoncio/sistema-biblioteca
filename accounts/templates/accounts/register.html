@@ -1,0 +1,63 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .left-area {
+            width: 50%;
+            height: 100%;
+            background-color: #f0f0f0; /* Cor de fundo da área esquerda */
+            float: left; /* Alinha à esquerda */
+        }
+        .right-area {
+            width: 50%;
+            height: 100%;
+            {% comment %} background-color: #ccc; /* Cor de fundo da área direita */ {% endcomment %}
+            float: right; /* Alinha à direita */
+        }
+    </style>
+</head>
+<body>
+    <div class="left-area">
+        <!-- Conteúdo da área esquerda -->
+        <img src="{% static 'accounts/img/Frame1.png'%}">
+
+    </div>
+    <div class="right-area">
+        <!-- Conteúdo da área direita -->
+        {% include "accounts/components/register_form.html" %}
+
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+{% comment %} <form method='POST' action=''>
+    {% csrf_token %}
+    {{form.username.label}}
+    {{form.username}}
+    {{form.email.label}}
+    {{form.email}}
+    {{form.password1.label}}
+    {{form.password1}}
+    {{form.password2.label}}
+    {{form.password2}}
+
+    <input type='submit' name='Criar Usuario'>
+
+
+</form> {% endcomment %}

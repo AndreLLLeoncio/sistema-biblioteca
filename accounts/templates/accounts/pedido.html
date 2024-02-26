@@ -1,64 +1,30 @@
-{% load static%}
-{% load bootstrap %}
+{% extends "accounts/test.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% comment %} <link rel="stylesheet" href="{% static 'accounts/css/base.css' %}"> {% endcomment %}
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
-    <link rel="icon" href="data">
-    <script src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
-    <title>Document</title>
+{% block content %}
 
-    <style>
-        body, html {
-            background-color: #22359C;
-            color: white
-        }
-        #messages{
-			background-color: grey;
-			color: #fff;
-			padding: 10px;
-			margin-top: 10px;
-		}
-    </style>
-</head>
-<body>
-
-    {% include "accounts/components/navbar.html" %}
-    <br/>
+<br/>
 
 
-        <div class= 'container'>
-        <center>
-        <h1>Fazer Solicitação de Livro</h1>
-        </center>
-        <div>
-            <br/>
-            <form action= '', method='POST'>
-        
-                {% csrf_token %}
-                {{form|bootstrap}}
+    <div class= 'container'>
+    <center>
+    <h1>Fazer Solicitação de Livro</h1>
+    </center>
+    <div>
+        <br/>
+        <form action= '', method='POST'>
+    
+            {% csrf_token %}
 
-            </br>
-                <input type='submit' value='Solicitar' class='btn btn-light'>
+        </br>
+            <input type='submit' value='Solicitar' class='btn btn-light'>
 
-            </form>
-        </div>
-        {% for message in messages %}
-            <p id='messages'>{{message}}</p>
-        {% endfor %}
+        </form>
+    </div>
+    {% for message in messages %}
+        <p id='messages'>{{message}}</p>
+    {% endfor %}
 
     </div>
 
 
-
-
-
-
-    
-</body>
-</html>
-
+{% endblock %}

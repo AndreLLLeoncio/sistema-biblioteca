@@ -1,0 +1,13 @@
+.capa img{
+    max-width: 200px;
+    display: block;
+    margin: 0px auto;
+}
+
+.capa{
+    height:400px;
+    width:300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

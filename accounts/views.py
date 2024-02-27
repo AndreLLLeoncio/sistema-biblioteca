@@ -64,7 +64,8 @@ def home(request):
 
 @login_required(login_url='login')
 def perfil(request):
-    return render(request, 'accounts/perfil.html')
+    user = request.user
+    return render(request, 'accounts/perfil.html', {'user': user})
 
 @login_required(login_url='login')
 def livrosPage(request):

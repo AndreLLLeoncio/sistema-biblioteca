@@ -17,27 +17,26 @@
         .left-area {
             width: 50%;
             height: 100%;
-            background-color: #f0f0f0; /* Cor de fundo da área esquerda */
-            float: left; /* Alinha à esquerda */
+            background-color: #f0f0f0;
+            float: left;
         }
         .right-area {
             width: 50%;
             height: 100%;
-            {% comment %} background-color: #ccc; /* Cor de fundo da área direita */ {% endcomment %}
-            float: right; /* Alinha à direita */
+            float: right;
         }
     </style>
 </head>
+
 <body>
+
     <div class="left-area">
-        <!-- Conteúdo da área esquerda -->
         <img src="{% static 'accounts/img/Frame1.png'%}">
-
     </div>
+
     <div class="right-area">
-        <!-- Conteúdo da área direita -->
         {% include "accounts/components/login_form.html" %}
-
     </div>
+
 </body>
 </html>

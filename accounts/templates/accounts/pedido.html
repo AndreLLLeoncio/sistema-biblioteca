@@ -1,30 +1,96 @@
 {% extends "accounts/test.html" %}
 
+{%load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{%static 'accounts/css/pedido.css'%}">
+{% endblock %}
+
 {% block content %}
 
-<br/>
 
+<div class='container'>
 
-    <div class= 'container'>
     <center>
-    <h1>Fazer Solicitação de Livro</h1>
-    </center>
-    <div>
         <br/>
-        <form action= '', method='POST'>
+        <h1>Fazer Solicitação de Livro</h1>
+        <br/>
+    </center>
     
-            {% csrf_token %}
 
-        </br>
-            <input type='submit' value='Solicitar' class='btn btn-light'>
 
-        </form>
-    </div>
-    {% for message in messages %}
-        <p id='messages'>{{message}}</p>
-    {% endfor %}
+    <form method="post">
 
-    </div>
+        {% csrf_token %}
+
+        <div class="row">
+
+            <div class='col'>
+                <div class="form-group">
+                    <label for="id_nome_livro">Nome do Livro</label>
+                    <input type="text" class="form-control" id="id_nome_livro" name="nome_livro" placeholder="Nome do Livro">
+                </div>
+            </div>
+
+            <br/>
+            
+            <div class='col'>
+                <div class="form-group">
+                    <label for="id_autor">Autor</label>
+                    <input type="text" class="form-control" id="id_autor" name="autor" placeholder="Autor">
+                </div>
+            </div>
+
+        </div>
+
+        <br/>
+
+        <div class="row">
+
+            <div class='col'> 
+                <div class="form-group">
+                    <label for="id_tipo">Tipo</label>
+                    <select class="form-control" id="id_tipo" name="tipo">
+                        <option value="Ficçao">Ficção</option>
+                        <option value="Não Ficção">Nao Ficção</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class='col'> 
+                <div class="form-group">
+                    <label for="id_genero">Genero</label>
+                    <input type="text" class="form-control" id="id_genero" name="genero" placeholder="Genero">
+                </div>
+            </div>
+
+        </div>
+
+        <br/>
+        
+        <div class="form-group">
+            <label for="id_descricao">Descrição</label>
+            <textarea type="textarea" class="form-control" id="id_descricao" name="descricao_pedido" placeholder="Descição do Pedido"></textarea>
+        </div>
+
+        <br/>
+        
+
+        <center>
+
+            <button type="submit" class="btn btn-primary">Solicitar</button>
+
+    
+            {% for message in messages %}
+                <p id='messages'>{{message}}</p>
+            {% endfor %}
+
+        </center>
+
+    </form>
+
+</div>
+
 
 
 {% endblock %}

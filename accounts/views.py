@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import CriarUsuarioForm, PedidoForm
+from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm
 from .models import Livro
 
 # Create your views here.
@@ -65,12 +65,30 @@ def home(request):
 @login_required(login_url='login')
 def perfil(request):
     user = request.user
-    return render(request, 'accounts/perfil.html', {'user': user})
+    
+    if request.method == 'POST':
+        user_form = EditarUsuarioForm(request.POST, instance=request.user)
+        
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Perfil Atualizado com Sucesso')
+            return redirect('perfil')
+    
+    else:
+        user_form = EditarUsuarioForm(instance=request.user)
+
+        
+    return render(request, 'accounts/perfil.html', {'user': user, 'user_form': user_form})
+
+
+
 
 @login_required(login_url='login')
 def livrosPage(request):
     livros = Livro.objects.all()
     return render(request, 'accounts/livros/livros.html', {'livros': livros})
+
+
 
 
 @login_required(login_url='login')

@@ -8,35 +8,34 @@
 <p>Nome de Usuario: {{ user.username }}</p>
 <p>Email: {{ user.email }}</p>
 
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateUserModal">
+  Atualizar Usuário
+</button>
 
-
-<div class="modal fade" tabindex="-1" role="dialog" id="modal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content"></div>
-    </div>
+<!-- Modal -->
+<div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="updateUserModalLabel">Atualizar Usuário</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <!-- Formulário -->
+              <form method="POST">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label class="small mb-1">Username:</label>
+                        {{ user_form.username }}
+                    <label class="small mb-1">Email:</label>
+                        {{ user_form.email }}
+                  </div>
+                  <button type="submit" class="btn btn-primary">Atualizar</button>
+              </form>
+          </div>
+      </div>
   </div>
-  
-  <!-- Create book button -->
-  <button id="atualizar-usuario" class="btn btn-primary" type="button" name="button">Atualizar</button>
+</div>
+
 {% endblock %}
 
-
-{%block scripts%}
-<script type="text/javascript">
-
-    // BS4
-    $(document).ready(function() {
-        $("#atualizar-usuario").modalForm({
-            formURL: "{% url 'atualizar_usuario' %}"
-        });
-    });
-    
-    // BS5
-    document.addEventListener('DOMContentLoaded', (e) => {
-      modalForm(document.getElementById('atualizar-usuario'), {
-        formURL: "{% url 'atualizar_usuario' %}"
-      })
-    });
-    
-    </script>
-{% endblock %}

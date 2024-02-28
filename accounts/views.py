@@ -4,7 +4,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm
+from bootstrap_modal_forms.generic import BSModalCreateView
 from .models import Livro
 
 # Create your views here.
@@ -65,21 +67,17 @@ def home(request):
 @login_required(login_url='login')
 def perfil(request):
     user = request.user
-    
-    if request.method == 'POST':
-        user_form = EditarUsuarioForm(request.POST, instance=request.user)
-        
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'Perfil Atualizado com Sucesso')
-            return redirect('perfil')
-    
-    else:
-        user_form = EditarUsuarioForm(instance=request.user)
 
         
-    return render(request, 'accounts/perfil.html', {'user': user, 'user_form': user_form})
+    return render(request, 'accounts/perfil.html')
 
+
+
+def aualizarUsuario(BSModalCreateView):
+    template_name = 'accounts/user/update.html'
+    form_class = EditarUsuarioForm
+    success_message = 'Usuario Atualizado'
+    success_url = reverse_lazy('perfil')
 
 
 

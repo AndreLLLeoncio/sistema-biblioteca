@@ -4,12 +4,37 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
 from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm
 from bootstrap_modal_forms.generic import BSModalCreateView
-from .models import Livro
+from .models import Livro, Pedido
 
 # Create your views here.
+
+
+@login_required(login_url='login')
+@staff_member_required
+def pagina_inicial_adm(request):
+    return render(request,'accounts/adm/pagina_inicial_adm.html')
+
+@login_required(login_url='login')
+@staff_member_required
+def pagina_pedidos_adm(request):
+    pedidos = Pedido.objects.all()
+    return render(request,'accounts/adm/pedidos_adm.html', {'pedidos': pedidos})
+
+
+
+@login_required(login_url='login')
+@staff_member_required
+def pedido_adm(request, pedido_id):
+    pedido = Pedido.objects.get(pk=pedido_id)
+    if pedido is not None:
+        return render(request, 'accounts/adm/pedido_adm.html', {'pedido': pedido})
+    else:
+        raise Http404("Pedido NAO Existe")
+
 
 def registerPage(request):
     if request.user.is_authenticated:
@@ -64,6 +89,8 @@ def sairUsuario(request):
 def home(request):
     return render(request, 'accounts/dashboard.html')
 
+
+
 @login_required(login_url='login')
 def perfil(request):
     user = request.user
@@ -72,17 +99,10 @@ def perfil(request):
 
         if user_form.is_valid():
             user_form.save()
-            messages.success(request, 'Your profile is updated successfully')
+            messages.success(request, 'Usuario Atualizado com Sucesso')
             return redirect(to='perfil')
     else:
         user_form = EditarUsuarioForm(instance=request.user)
-
-    return render(request, 'accounts/perfil.html', {'user_form': user_form})
-
-
-@login_required
-def atualizarUsuario(request):
-
 
     return render(request, 'accounts/perfil.html', {'user_form': user_form})
 
@@ -101,11 +121,12 @@ def test(request):
     return render(request, 'accounts/test1.html', {'user_form': user_form})
 
 
+
+
 @login_required(login_url='login')
 def livrosPage(request):
     livros = Livro.objects.all()
     return render(request, 'accounts/livros/livros.html', {'livros': livros})
-
 
 
 
@@ -123,6 +144,8 @@ def pedidoPage(request):
         form = PedidoForm()
 
     return render(request, 'accounts/pedido.html', {'form':form})
+
+
 
 
 @login_required(login_url='login')

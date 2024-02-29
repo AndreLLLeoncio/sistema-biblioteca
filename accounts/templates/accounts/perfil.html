@@ -17,6 +17,11 @@
   Atualizar Usuário
 </button>
 
+{% for message in messages %}
+<p id='messages'>{{message}}</p>
+{% endfor %}
+
+
 
 <!-- Modal -->
 <div class='atualizar-usuario-modal'>
@@ -48,7 +53,6 @@
 
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Atualizar</button>
-
             </div>
 
         </form>

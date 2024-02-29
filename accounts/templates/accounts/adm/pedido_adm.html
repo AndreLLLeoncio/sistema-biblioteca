@@ -1,0 +1,28 @@
+{% extends "accounts/adm/base_adm.html" %}
+
+{%load static %}
+
+{% block styles %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Pedido</h1>
+
+
+<p>Nome do Usuario: {{ pedido.user_fk.username }}</p>
+
+<p>Nome do Livro: {{ pedido.nome_livro }}</p>
+
+<p>Autor: {{ pedido.autor }}</p>
+
+<p>Tipo: {{ pedido.tipo }}</p>
+
+<p>Generos: {{ pedido.genero }}</p>
+
+<p>Descrição do Pedido: {{ pedido.descricao_pedido }}</p>
+
+
+{% endblock %}

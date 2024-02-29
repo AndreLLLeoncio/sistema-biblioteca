@@ -1,0 +1,40 @@
+{% extends "accounts/adm/base_adm.html" %}
+
+{%load static %}
+
+{% block styles %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Pedidos</h1>
+
+<div class='container'>
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Usuario</th>
+        <th scope="col">Livro</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for pedido in pedidos %}
+      <tr>
+        <td>{{ pedido.user_fk.username}}</td>
+        <td>{{ pedido.nome_livro}}</td>
+        <td>
+          <a href="{% url 'pedido_adm' pedido.id %}">
+            <i class="fas fa-eye"></i>
+        </a>
+        </td>
+      </tr>
+      {% endfor%}
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock %}

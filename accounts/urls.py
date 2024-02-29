@@ -13,6 +13,9 @@ urlpatterns = [
     path('login/', views.loginPage, name='login' ),
     path('sair/', views.sairUsuario, name='sair' ),
     path('pedido/', views.pedidoPage, name='pedido' ),
-    path('atualizar_usuario/', views.atualizarUsuario, name='atualizar_usuario'),
     path('test/', views.test, name='test' ),
+    path('adm/', views.pagina_inicial_adm, name='adm_home' ),
+    path('adm/pedidos', views.pagina_pedidos_adm, name='pedidos_adm' ),
+    path('adm/pedidos/<int:pedido_id>', views.pedido_adm, name= 'pedido_adm'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

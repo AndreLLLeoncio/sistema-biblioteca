@@ -76,22 +76,15 @@ def perfil(request):
             return redirect(to='perfil')
     else:
         user_form = EditarUsuarioForm(instance=request.user)
+
     return render(request, 'accounts/perfil.html', {'user_form': user_form})
 
 
 @login_required
 def atualizarUsuario(request):
-    if request.method == 'POST':
-        user_form = EditarUsuarioForm(request.POST, instance=request.user)
 
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'Your profile is updated successfully')
-            return redirect(to='test')
-    else:
-        user_form = EditarUsuarioForm(instance=request.user)
 
-    return render(request, 'accounts/test1.html', {'user_form': user_form})
+    return render(request, 'accounts/perfil.html', {'user_form': user_form})
 
 
 

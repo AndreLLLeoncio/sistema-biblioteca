@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'bootstrap_modal_forms',
-    'widget_tweaks',
-    
     
     'accounts',
 ]

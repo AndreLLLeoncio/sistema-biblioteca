@@ -1,5 +1,10 @@
 {% extends "accounts/test.html" %}
 
+{%load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{%static 'accounts/css/perfil.css'%}">
+{% endblock %}
 
 
 {% block content %}
@@ -12,30 +17,47 @@
   Atualizar Usuário
 </button>
 
+
 <!-- Modal -->
-<div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="updateUserModalLabel">Atualizar Usuário</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <!-- Formulário -->
-              <form method="POST">
-                  {% csrf_token %}
-                  <div class="form-group">
-                    <label class="small mb-1">Username:</label>
-                        {{ user_form.username }}
-                    <label class="small mb-1">Email:</label>
-                        {{ user_form.email }}
-                  </div>
-                  <button type="submit" class="btn btn-primary">Atualizar</button>
-              </form>
-          </div>
-      </div>
-  </div>
+<div class='atualizar-usuario-modal'>
+    <div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateUserModalLabel">Atualizar Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="username">Nome de Usuario</label>
+                        {{ user_form.username }}               
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        {{ user_form.email }}            
+                    </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+
+            </div>
+
+        </form>
+
+        </div>
+    </div>
+    </div>
 </div>
+
 
 {% endblock %}
 

@@ -6,12 +6,12 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link" href="{% url 'home'%}">Home</a>
-          <a class="nav-link" href="{% url 'livros'%}">Livros</a>
-          <a class="nav-link" href="{% url 'livros'%}">Autores</a>
-          <a class="nav-link" href="{% url 'livros'%}">Generos</a>
-          <a class="nav-link" href="{% url 'pedido'%}">Alugueis</a>
-          <a class="nav-link" href="{% url 'pedido'%}">Devoluções</a>
+          <a class="nav-link" href="{% url 'adm_home'%}">Home</a>
+          <a class="nav-link" href="{% url 'livros_adm'%}">Livros</a>
+          <a class="nav-link" href="{% url 'autores_adm'%}">Autores</a>
+          <a class="nav-link" href="{% url 'generos_adm'%}">Generos</a>
+          <a class="nav-link" href="{% url 'alugueis_adm'%}">Alugueis</a>
+          <a class="nav-link" href="{% url 'devolucoes_adm'%}">Devoluções</a>
           <a class="nav-link" href="{% url 'pedidos_adm'%}">Pedidos</a>
           <a class="nav-link" href="{% url 'test'%}">test</a>
           <a class="nav-link" href="{% url 'perfil'%}">{{request.user}}</a>

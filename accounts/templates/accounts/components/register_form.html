@@ -64,6 +64,19 @@
 			outline: 0px !important;
 		}
 
+		#messages{
+			background-color: grey;
+			color: #fff;
+			padding: 10px;
+			margin-top: 10px;
+		}
+		.mensagem-erro {
+			background-color: grey;
+			color: #fff;
+			padding: 10px;
+			margin-top: 10px;
+		}
+
 	</style>
 
 </head>
@@ -113,7 +126,15 @@
 					</form>
 				</div>
 
-				{{form.errors}}
+				{% if form.errors %}
+					<div class="mensagem-erro">
+					{% for field, error_list in form.errors.items %}
+						{% for error in error_list %}
+							{{ error }}
+						{% endfor %}
+					{% endfor %}
+					</div>
+				{% endif %}
 		
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">

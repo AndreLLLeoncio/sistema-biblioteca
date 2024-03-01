@@ -13,6 +13,8 @@ from .models import Livro, Pedido
 # Create your views here.
 
 
+#   ADM
+
 @login_required(login_url='login')
 @staff_member_required
 def pagina_inicial_adm(request):
@@ -24,8 +26,6 @@ def pagina_pedidos_adm(request):
     pedidos = Pedido.objects.all()
     return render(request,'accounts/adm/pedidos_adm.html', {'pedidos': pedidos})
 
-
-
 @login_required(login_url='login')
 @staff_member_required
 def pedido_adm(request, pedido_id):
@@ -34,6 +34,41 @@ def pedido_adm(request, pedido_id):
         return render(request, 'accounts/adm/pedido_adm.html', {'pedido': pedido})
     else:
         raise Http404("Pedido NAO Existe")
+    
+
+@login_required(login_url='login')
+@staff_member_required
+def livros_adm(request):
+    return render(request,'accounts/adm/livros_adm.html')
+
+
+@login_required(login_url='login')
+@staff_member_required
+def autores_adm(request):
+    return render(request,'accounts/adm/autores_adm.html')
+
+
+@login_required(login_url='login')
+@staff_member_required
+def generos_adm(request):
+    return render(request,'accounts/adm/generos_adm.html')
+
+
+@login_required(login_url='login')
+@staff_member_required
+def alugueis_adm(request):
+    return render(request,'accounts/adm/alugueis_adm.html')
+
+
+@login_required(login_url='login')
+@staff_member_required
+def devolucoes_adm(request):
+    return render(request,'accounts/adm/devolucoes_adm.html')
+
+
+
+
+# Login / Cadastro / Logout
 
 
 def registerPage(request):
@@ -55,8 +90,6 @@ def registerPage(request):
         return render(request, 'accounts/register.html', context)
 
 
-
-
 def loginPage(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -71,13 +104,14 @@ def loginPage(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                if user.is_staff == 1:
+                    return redirect('adm_home')
+                else:
+                    return redirect('home')
             else:
                 messages.info(request, "Nome de Usuario OU Senha incorretos")
 
         return render(request, 'accounts/login.html')
-
-
 
 
 def sairUsuario(request):
@@ -85,10 +119,15 @@ def sairUsuario(request):
     return redirect('login')
 
 
+
+
+
+# USUARIO
+
+
 @login_required(login_url='login')
 def home(request):
     return render(request, 'accounts/dashboard.html')
-
 
 
 @login_required(login_url='login')
@@ -107,28 +146,22 @@ def perfil(request):
     return render(request, 'accounts/perfil.html', {'user_form': user_form})
 
 
-
-def test(request):
-    if request.method == 'POST':
-        user_form = EditarUsuarioForm(request.POST, instance=request.user)
-
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'Your profile is updated successfully')
-            return redirect(to='test')
-    else:
-        user_form = EditarUsuarioForm(instance=request.user)
-    return render(request, 'accounts/test1.html', {'user_form': user_form})
-
-
-
-
 @login_required(login_url='login')
 def livrosPage(request):
     livros = Livro.objects.all()
     return render(request, 'accounts/livros/livros.html', {'livros': livros})
 
 
+@login_required(login_url='login')
+def livro(request, livro_id):
+    livro = Livro.objects.get(pk=livro_id)
+    autores = livro.fk_autor.all()
+    generos = livro.genero_fk.all()
+    if livro is not None:
+        return render(request, 'accounts/livros/livro.html', {'livro': livro, 'autores': autores, 'generos': generos})
+    else:
+        raise Http404("Livro NAO Existe")
+    
 
 @login_required(login_url='login')
 def pedidoPage(request):
@@ -146,14 +179,22 @@ def pedidoPage(request):
     return render(request, 'accounts/pedido.html', {'form':form})
 
 
-
-
 @login_required(login_url='login')
-def livro(request, livro_id):
-    livro = Livro.objects.get(pk=livro_id)
-    autores = livro.fk_autor.all()
-    generos = livro.genero_fk.all()
-    if livro is not None:
-        return render(request, 'accounts/livros/livro.html', {'livro': livro, 'autores': autores, 'generos': generos})
+def meusLivros(request):
+    return render(request, 'accounts/user/meus_livros.html')
+
+
+
+
+
+def test(request):
+    if request.method == 'POST':
+        user_form = EditarUsuarioForm(request.POST, instance=request.user)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='test')
     else:
-        raise Http404("Livro NAO Existe")
+        user_form = EditarUsuarioForm(instance=request.user)
+    return render(request, 'accounts/test1.html', {'user_form': user_form})

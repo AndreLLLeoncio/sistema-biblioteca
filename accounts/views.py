@@ -39,7 +39,8 @@ def pedido_adm(request, pedido_id):
 @login_required(login_url='login')
 @staff_member_required
 def livros_adm(request):
-    return render(request,'accounts/adm/livros_adm.html')
+    livros = Livro.objects.prefetch_related('fk_autor')
+    return render(request,'accounts/adm/livros_adm.html', {'livros': livros})
 
 
 @login_required(login_url='login')

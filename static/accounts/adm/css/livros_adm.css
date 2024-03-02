@@ -1,0 +1,26 @@
+.icones{
+    display: inline-flex;
+}
+
+#visualizar{
+    color: blue;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+
+#deletar{
+    color: red;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#editar{
+    color: black;
+    padding-left: 10px;
+}
+
+.visualizar-modal{
+    color:black;
+}
+

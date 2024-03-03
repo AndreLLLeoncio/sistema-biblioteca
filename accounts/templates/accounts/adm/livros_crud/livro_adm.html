@@ -1,0 +1,43 @@
+{% extends "accounts/adm/base_adm.html" %}
+
+{%load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{%static 'accounts/adm/css/livro_adm.css'%}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex flex-row">
+    <div class='tela-esquerda'>
+        <img src="{{ livro.cover.url }}" alt="Capa de {{ livro.nome }}">
+    </div>
+    <div class='tela-direita'>
+
+        <h1>{{ livro.nome }}</h1>
+
+        <p>ISBN: {{ livro.isbn }}</p>
+
+        <p>Data de Lançamento: {{ livro.data_lançamento }}</p>
+
+        <p>Autor: 
+            {%for autor in autores%}
+            {{autor.nome}}</p>
+        {%endfor%}
+
+        <p>Tipo: {{ livro.tipo }}</p>
+
+
+        <p>Generos: 
+            {%for genero in generos%}
+            {{genero.nome}}</p>
+        {%endfor%}
+
+        <p>Editora: {{ livro.fk_editora.nome }}</p>
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -9,6 +9,9 @@ class Autor(models.Model):
     nome= models.CharField(max_length=50)
     data_nascimento = models.DateField()
     nacionalidade = models.CharField( max_length=50)
+    
+    def __str__(self):
+        return self.nome
 
 
 class Editora(models.Model):
@@ -18,10 +21,16 @@ class Editora(models.Model):
     endereço = models.CharField(max_length=50)
     telefone = models.DecimalField(max_digits=12,  decimal_places=0)
 
+    def __str__(self):
+        return self.nome
+
 
 class Genero(models.Model):
     nome = models.CharField(max_length=50)
     area = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nome
 
 
 class Livro(models.Model):

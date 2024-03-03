@@ -1,0 +1,114 @@
+{% extends "accounts/adm/base_adm.html" %}
+
+{%load static %}
+
+{% block styles %}
+{% endblock %}
+
+
+{% block content %}
+<br>
+<center>
+
+<div class='container'>
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p}}
+
+        <input type='submit' value='Criar' class='btn btn-secondary'>
+    </form>
+</div>
+</center>
+
+{% comment %} <div class='container'>
+
+    <center>
+        <br/>
+        <h1>Adicionar Livro</h1>
+        <br/>
+    </center>
+    
+
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="row">
+
+            <div class='col'>
+                <div class="form-group">
+                    <label for="id_nome">Nome</label>
+                    <input type="text" class="form-control" id="id_nome_livro" name="nome" placeholder="Nome do Livro">
+                </div>
+            </div>
+
+            <br/>
+            
+            <div class='col'>
+                <div class="form-group">
+                    <label for="id_isbn">ISBN</label>
+                    <input type="number" class="form-control" id="id_isbn" name="isbn" placeholder="ISBN">
+                </div>
+            </div>
+
+        </div>
+
+        <br/>
+
+        <div class="row">
+
+            <div class='col'> 
+                <div class="form-group">
+                    <label for="id_tipo">Tipo</label>
+                    <select class="form-select" id="id_tipo" name="tipo">
+                        <option selected>Selecionar Tipo</option>
+                        <option value="Ficçao">Ficção</option>
+                        <option value="Não Ficção">Nao Ficção</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class='col'> 
+                <div class="form-group">
+                    <label for="id_genero">Data de Lançamento</label>
+                    <input type="date" class="form-control" id="id_genero" name="data_lançamento">
+                </div>
+            </div>
+
+
+            <div class='col'> 
+            <div class="form-group">
+                <label for="id_autores">Autores</label>
+                <select multiple class="form-select" id="id_autores" name="fk_autor">
+                    {% for autor in fk_autor %}
+                    <option value="{{ autor.id }}">{{ autor.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        </div>
+
+        <br/>
+        
+        
+
+        <center>
+
+            <button type="submit" class="btn btn-primary">Criar</button>
+
+    
+            {% for message in messages %}
+                <p id='messages'>{{message}}</p>
+            {% endfor %}
+
+        </center>
+
+    </form>
+
+</div> {% endcomment %}
+
+
+{% endblock %}

@@ -6,20 +6,26 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
-from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm
+from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm
 from bootstrap_modal_forms.generic import BSModalCreateView
 from .models import Livro, Pedido
 
 # Create your views here.
 
 
+
+
 #   ADM
 
+#  Pagina Inicial do ADM
 @login_required(login_url='login')
 @staff_member_required
 def pagina_inicial_adm(request):
     return render(request,'accounts/adm/pagina_inicial_adm.html')
 
+
+
+# ADM  Pedido
 @login_required(login_url='login')
 @staff_member_required
 def pagina_pedidos_adm(request):
@@ -35,19 +41,56 @@ def pedido_adm(request, pedido_id):
     else:
         raise Http404("Pedido NAO Existe")
     
-
 @login_required(login_url='login')
 @staff_member_required
 def livros_adm(request):
     livros = Livro.objects.prefetch_related('fk_autor')
     return render(request,'accounts/adm/livros_adm.html', {'livros': livros})
 
+
+
+# ADM  Livro
 @login_required(login_url='login')
 @staff_member_required
 def read_livro_adm(request, livro_id):
     livro = get_object_or_404(Livro, pk=livro_id)
     data = {'nome': livro.nome, 'isbn': livro.isbn}
     return JsonResponse(data)
+
+@login_required(login_url='login')
+@staff_member_required
+def livro_adm(request, livro_id):
+    livro = Livro.objects.get(pk=livro_id)
+    autores = livro.fk_autor.all()
+    generos = livro.genero_fk.all()
+    if livro is not None:
+        return render(request, 'accounts/adm/livros_crud/livro_adm.html', {'livro': livro, 'autores': autores, 'generos': generos})
+    else:
+        raise Http404("Livro NAO Existe")
+
+@login_required(login_url='login')
+@staff_member_required
+def deletar_livro_adm(request, livro_id):
+    livro = Livro.objects.get(pk=livro_id)
+    livro.delete()
+    return redirect('livros_adm')
+
+@login_required(login_url='login')
+@staff_member_required
+def adicionar_livro_adm(request):
+    if request.method == 'POST':
+        form = AdicionarLivroAdm(request.POST)
+        if form.is_valid():
+            livro = form.save(commit=False)
+            livro.save()
+            messages.success(request, 'Livro Adicionado com Sucesso ')
+            return redirect('adicionar_livro_adm')
+    else:
+        form = AdicionarLivroAdm()
+
+    return render(request, 'accounts/adm/livros_crud/adicionar_livro_adm.html', {'form':form})
+
+
 
 @login_required(login_url='login')
 @staff_member_required

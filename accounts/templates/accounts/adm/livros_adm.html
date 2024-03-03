@@ -40,9 +40,10 @@
             <td>
                 <div class='icones'>
 
-                    <a data-bs-toggle="modal" data-bs-target="#visualizar-livro-modal">
+                    <a href="#" onclick="visualizarLivro('{{ livro.id }}')">
                         <i class="fas fa-eye" id='visualizar'></i>
                     </a>
+                    
 
                     <a href="#">
                         <i class="fas fa-trash" id='deletar'></i>
@@ -64,37 +65,11 @@
 
 
 
+{% include 'accounts/adm/livros_crud/visualizar.html'%}
 
 
-
-
-
-
-<div class='visualizar-modal'>
-    <div class="modal fade" id="visualizar-livro-modal" tabindex="-1" aria-labelledby="visualizar-livro-modal" aria-hidden="true">
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-                {% for livro in livros %}
-
-                <div class="modal-header">
-                    <h1>{{ livro.nome}}</h1>
-                
-                </div>
-
-                <div class="modal-body">
-
-                </div>
-
-                <div class="modal-footer">
-
-                </div>
-
-                {% endfor%}
-            </div>
-        </div>
-    </div>
-</div>
-
+{% block scripts %}
+<script src="{% static 'accounts/adm/js/livros.js' %}"></script>
+{%endblock%}
 
 {% endblock %}

@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -42,6 +42,12 @@ def livros_adm(request):
     livros = Livro.objects.prefetch_related('fk_autor')
     return render(request,'accounts/adm/livros_adm.html', {'livros': livros})
 
+@login_required(login_url='login')
+@staff_member_required
+def read_livro_adm(request, livro_id):
+    livro = get_object_or_404(Livro, pk=livro_id)
+    data = {'nome': livro.nome, 'isbn': livro.isbn}
+    return JsonResponse(data)
 
 @login_required(login_url='login')
 @staff_member_required

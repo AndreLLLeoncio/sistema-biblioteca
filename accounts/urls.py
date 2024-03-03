@@ -18,6 +18,7 @@ urlpatterns = [
     path('adm/', views.pagina_inicial_adm, name='adm_home' ),
     path('adm/pedidos', views.pagina_pedidos_adm, name='pedidos_adm' ),
     path('adm/livros', views.livros_adm, name='livros_adm' ),
+    path('adm/livros/<int:livro_id>', views.read_livro_adm, name='read_livro_adm' ),
     path('adm/autores', views.autores_adm, name='autores_adm' ),
     path('adm/generos', views.generos_adm, name='generos_adm' ),
     path('adm/alugueis', views.alugueis_adm, name='alugueis_adm' ),

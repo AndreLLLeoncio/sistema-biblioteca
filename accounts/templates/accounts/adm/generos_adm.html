@@ -3,13 +3,63 @@
 {%load static %}
 
 {% block styles %}
-
+<link rel="stylesheet" href="{%static 'accounts/adm/css/adm_tabelas.css'%}">
 {% endblock %}
 
 
 {% block content %}
 
-<h1>Generos</h1>
+<br>
 
+<center>
+    <h1>GENEROS</h1>
+    <br>
+    <a href="#"><button type="button" class="btn btn-light">Adicionar</button></a>
+
+</center>
+
+<br>
+
+<div class='container'>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NOME</th>
+            <th scope="col">AREA</th>
+            <th scope="col">AÇÕES</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for genero in generos %}
+          <tr>
+            <td>{{ genero.id}}</td>
+            <td>{{ genero.nome}}</td>
+            <td>{{ genero.area }}</td>
+            <td>
+                <div class='icones'>
+
+                    <a href="#">
+                        <i class="fas fa-eye" id='visualizar'></i>
+                    </a>
+                    
+
+                    <a href="#">
+                        <i class="fas fa-trash" id='deletar'></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fas fa-pen" id='editar'></i>
+                    </a>
+
+                </div>
+
+            </td>
+
+          </tr>
+          {% endfor%}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}

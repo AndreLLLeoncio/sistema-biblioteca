@@ -8,7 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
 from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm
 from bootstrap_modal_forms.generic import BSModalCreateView
-from .models import Livro, Pedido
+from .models import Livro, Pedido, Autor, Genero
 
 # Create your views here.
 
@@ -41,21 +41,17 @@ def pedido_adm(request, pedido_id):
     else:
         raise Http404("Pedido NAO Existe")
     
+
+
+
+
+# ADM  Livro
+
 @login_required(login_url='login')
 @staff_member_required
 def livros_adm(request):
     livros = Livro.objects.prefetch_related('fk_autor')
     return render(request,'accounts/adm/livros_adm.html', {'livros': livros})
-
-
-
-# ADM  Livro
-@login_required(login_url='login')
-@staff_member_required
-def read_livro_adm(request, livro_id):
-    livro = get_object_or_404(Livro, pk=livro_id)
-    data = {'nome': livro.nome, 'isbn': livro.isbn}
-    return JsonResponse(data)
 
 @login_required(login_url='login')
 @staff_member_required
@@ -92,10 +88,14 @@ def adicionar_livro_adm(request):
 
 
 
+# ADM  AUTOR
+
+
 @login_required(login_url='login')
 @staff_member_required
 def autores_adm(request):
-    return render(request,'accounts/adm/autores_adm.html')
+    autores = Autor.objects.all()
+    return render(request,'accounts/adm/autores_adm.html', {"autores": autores})
 
 
 @login_required(login_url='login')
@@ -114,6 +114,20 @@ def alugueis_adm(request):
 @staff_member_required
 def devolucoes_adm(request):
     return render(request,'accounts/adm/devolucoes_adm.html')
+
+
+
+
+
+
+
+# ADM  GENEROS
+
+@login_required(login_url='login')
+@staff_member_required
+def generos_adm(request):
+    generos = Genero.objects.all()
+    return render(request,'accounts/adm/generos_adm.html', {"generos":generos})
 
 
 

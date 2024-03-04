@@ -3,7 +3,7 @@
 {%load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{%static 'accounts/adm/css/livros_adm.css'%}">
+<link rel="stylesheet" href="{%static 'accounts/adm/css/adm_tabelas.css'%}">
 {% endblock %}
 
 
@@ -24,6 +24,7 @@
     <table class="table">
         <thead class="thead-dark">
           <tr>
+            <th scope="col">ID</th>
             <th scope="col">ISBN</th>
             <th scope="col">NOME</th>
             <th scope="col">AUTOR</th>
@@ -33,6 +34,7 @@
         <tbody>
             {% for livro in livros %}
           <tr>
+            <td>{{ livro.id}}</td>
             <td>{{ livro.isbn}}</td>
             <td>{{ livro.nome}}</td>
             <td>

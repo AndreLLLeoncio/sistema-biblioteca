@@ -7,6 +7,8 @@
 
 
 {% block content %}
+
+
 <br>
 <center>
 
@@ -21,7 +23,9 @@
 </div>
 </center>
 
-{% comment %} <div class='container'>
+
+{% comment %}
+<div class='container'>
 
     <center>
         <br/>
@@ -53,6 +57,13 @@
                 </div>
             </div>
 
+            <div class='col'> 
+                <div class="form-group">
+                    <label for="id_genero">Data de Lançamento</label>
+                    <input type="date" class="form-control" id="id_genero" name="data_lançamento">
+                </div>
+            </div>
+
         </div>
 
         <br/>
@@ -70,30 +81,58 @@
                 </div>
             </div>
 
+            
+
+
             <div class='col'> 
                 <div class="form-group">
-                    <label for="id_genero">Data de Lançamento</label>
-                    <input type="date" class="form-control" id="id_genero" name="data_lançamento">
+                    <label for="id_autores">Autores</label>
+                    <select multiple class="form-control" id="id_autores" name="fk_autor">
+                        {% for autor in autores %}
+                        <option value="{{ autor.id }}">{{ autor.nome }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
 
 
             <div class='col'> 
-            <div class="form-group">
-                <label for="id_autores">Autores</label>
-                <select multiple class="form-select" id="id_autores" name="fk_autor">
-                    {% for autor in fk_autor %}
-                    <option value="{{ autor.id }}">{{ autor.nome }}</option>
-                    {% endfor %}
-                </select>
+                <div class="form-group">
+                    <label for="id_generos">Generos</label>
+                    <select multiple class="form-select" id="id_generos" name="genero_fk">
+                        {% for genero in generos %}
+                        <option value="{{ genero.id }}">{{ genero.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-        </div>
+
+
+            <div class='col'> 
+                <div class="form-group">
+                    <label for="id_editora">Tipo</label>
+                    <select class="form-select" id="id_editora" name="fk_editora">
+                        <option selected>Selecionar Tipo</option>
+                        {% for editora in editoras%}
+                        <option value="{{ editora.id }}">{{ editora.nome}}</option>
+                        {% endfor%}
+                    </select>
+                </div>
+            </div>
+
+            <div class='col'> 
+                <div class="form-group">
+                    <label for="id_capa">Capa</label>
+                    <div class='custom-file'>
+                        <input type='file' class='custom-file-input' id='custom-file' name='cover'></input>
+                        <label class='custom-file-label' for='id_capa'></label>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
         <br/>
-        
-        
 
         <center>
 
@@ -108,7 +147,7 @@
 
     </form>
 
-</div> {% endcomment %}
+</div> 
 
-
+{% endcomment %}
 {% endblock %}

@@ -8,7 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
 from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm
 from bootstrap_modal_forms.generic import BSModalCreateView
-from .models import Livro, Pedido, Autor, Genero
+from .models import Livro, Pedido, Autor, Genero, Editora
 
 # Create your views here.
 
@@ -83,8 +83,12 @@ def adicionar_livro_adm(request):
             return redirect('adicionar_livro_adm')
     else:
         form = AdicionarLivroAdm()
+    
+    autores = Autor.objects.all()
+    generos = Genero.objects.all()
+    editoras = Editora.objects.all()
 
-    return render(request, 'accounts/adm/livros_crud/adicionar_livro_adm.html', {'form':form})
+    return render(request, 'accounts/adm/livros_crud/adicionar_livro_adm.html', {'form':form, 'autores': autores, 'generos':generos, 'editoras':editoras})
 
 
 

@@ -10,9 +10,11 @@
 {% block content %}
 
 <div class="d-flex flex-row">
+
     <div class='tela-esquerda'>
         <img src="{{ livro.cover.url }}" alt="Capa de {{ livro.nome }}">
     </div>
+
     <div class='tela-direita'>
 
         <h1>{{ livro.nome }}</h1>
@@ -36,7 +38,18 @@
 
         <p>Editora: {{ livro.fk_editora.nome }}</p>
 
+        {% include "accounts/adm/livros_crud/adicionar_copia.html" %}
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adicionar_edicao">
+            Adicionar Copia
+        </button>
+
     </div>
+    <br>
+
+
+      
+
 </div>
 
 

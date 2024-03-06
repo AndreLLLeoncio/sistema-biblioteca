@@ -8,7 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
 from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm
 from bootstrap_modal_forms.generic import BSModalCreateView
-from .models import Livro, Pedido, Autor, Genero, Editora
+from .models import Livro, Pedido, Autor, Genero, Editora, Estoque
 
 # Create your views here.
 
@@ -89,6 +89,33 @@ def adicionar_livro_adm(request):
     editoras = Editora.objects.all()
 
     return render(request, 'accounts/adm/livros_crud/adicionar_livro_adm.html', {'form':form, 'autores': autores, 'generos':generos, 'editoras':editoras})
+
+@login_required(login_url='login')
+@staff_member_required
+def adicionar_edicao_adm(request):
+    if request.method == 'POST':
+        livro_id = request.POST.get('livro_id')
+        num_copias = int(request.POST.get('num_copias'))
+        livro = Livro.objects.get(pk=livro_id)
+
+        maior_edicao = Estoque.objects.filter(livro_fk = livro).order_by('-edicao').first()
+        if maior_edicao:
+            proxima_edicao = maior_edicao.edicao + 1
+        else:
+            proxima_edicao = 1
+
+        for i in range(proxima_edicao, proxima_edicao + num_copias):
+            estoque = Estoque(livro_fk = livro, edicao=i)
+            estoque.save()
+        return redirect('livro_adm', livro_id=livro_id)
+    else:
+        return redirect('livro_adm')
+
+
+
+
+
+
 
 
 

@@ -279,6 +279,19 @@ def meusLivros(request):
     return render(request, 'accounts/user/meus_livros.html')
 
 
+@login_required(login_url='login')
+def reservarLivro(request, livro_id):
+    if Estoque.objects.filter(livro_fk = livro_id).exists():
+        estoque_disponivel = Estoque.objects.filter(livro_fk = livro_id, reservado=False, alugado=False).order_by('id').first()
+        if estoque_disponivel:
+            estoque_disponivel.reservado = True
+            estoque_disponivel.save()
+            messages.success(request, 'Livro Reservado com Successo')
+        else:
+            messages.error(request, 'Livro Indisponivel para Reserva')
+    else:
+        messages.error(request, 'Ainda não temos cópias para este livro')
+    return redirect('livro',livro_id=livro_id)
 
 
 

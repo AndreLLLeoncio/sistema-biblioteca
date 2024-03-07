@@ -1,0 +1,25 @@
+<div class='adicionar_edicao-modal'>
+    <div class="modal fade" id="adicionar_edicao" tabindex="-1" aria-labelledby="adicionar_edicao" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Adicionar Cópia</h2>
+                </div>
+
+                <div class="modal-body">
+                    <form method='post' action="{% url 'adicionar_edicao_adm'%}">
+                        {%csrf_token%}
+                        <input type="hidden" name="livro_id" value="{{ livro.id }}">
+                        <label for="num_copias">Numero de cópias: </label>
+                        <input type="number" name="num_copias" id="num_copias" min="1" required>
+                        <button type="submit">Adicionar</button>
+                    <form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

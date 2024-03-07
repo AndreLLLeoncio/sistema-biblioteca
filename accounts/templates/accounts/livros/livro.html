@@ -3,7 +3,7 @@
 {%load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{%static 'accounts/css/livro.css'%}">
+<link rel="stylesheet" href="{%static 'accounts/adm/css/livro_adm.css'%}">
 {% endblock %}
 
 
@@ -35,6 +35,15 @@
             {%endfor%}
 
             <p>Editora: {{ livro.fk_editora.nome }}</p>
+
+                <form action="{% url 'reservar_livro'  livro.id%}" method='POST'>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">
+                        Reservar
+                    </button>
+                </form>
+
+
 
         </div>
     </div>

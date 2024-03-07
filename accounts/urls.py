@@ -16,6 +16,7 @@ urlpatterns = [
     path('livros/', views.livrosPage, name='livros'),
     path('livros/<int:livro_id>', views.livro, name= 'livro'),
     path('pedido/', views.pedidoPage, name='pedido' ),
+    path('reservar_livro/<int:livro_id>', views.reservarLivro, name='reservar_livro'),
 
 
     path('test/', views.test, name='test' ),
@@ -26,6 +27,7 @@ urlpatterns = [
     path('adm/livros', views.livros_adm, name='livros_adm' ),
     path('adm/livros/<int:livro_id>', views.livro_adm, name='livro_adm' ),
     path('deletar_livro_adm/<livro_id>', views.deletar_livro_adm, name='deletar_livro_adm'),
+    path('adicionar_edicao_adm/', views.adicionar_edicao_adm, name='adicionar_edicao_adm'),
     path('adm/livros/adicionar_livro_adm', views.adicionar_livro_adm, name='adicionar_livro_adm' ),
 
 

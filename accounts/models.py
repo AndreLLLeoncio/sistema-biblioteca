@@ -47,6 +47,8 @@ class Livro(models.Model):
 class Estoque(models.Model):
     livro_fk = models.ForeignKey(Livro,null=True, blank=True, on_delete= models.SET_NULL)
     edicao = models.IntegerField()
+    reservado = models.BooleanField(default=False)
+    alugado = models.BooleanField(default=False)
 
 
 

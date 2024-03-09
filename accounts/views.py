@@ -249,11 +249,12 @@ def livrosPage(request):
 
 @login_required(login_url='login')
 def livro(request, livro_id):
+    copia_disponivel = Estoque.objects.filter(livro_fk = livro_id, reservado=False, alugado=False).exists()
     livro = Livro.objects.get(pk=livro_id)
     autores = livro.fk_autor.all()
     generos = livro.genero_fk.all()
     if livro is not None:
-        return render(request, 'accounts/livros/livro.html', {'livro': livro, 'autores': autores, 'generos': generos})
+        return render(request, 'accounts/livros/livro.html', {'livro': livro, 'autores': autores, 'generos': generos, 'copia_disponivel':copia_disponivel })
     else:
         raise Http404("Livro NAO Existe")
     

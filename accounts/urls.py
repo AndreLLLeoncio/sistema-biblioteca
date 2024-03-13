@@ -29,6 +29,7 @@ urlpatterns = [
     path('deletar_livro_adm/<livro_id>', views.deletar_livro_adm, name='deletar_livro_adm'),
     path('adicionar_edicao_adm/', views.adicionar_edicao_adm, name='adicionar_edicao_adm'),
     path('adm/livros/adicionar_livro_adm', views.adicionar_livro_adm, name='adicionar_livro_adm' ),
+    path('editar_livro_adm/<livro_id>', views.editar_livro_adm, name='editar_livro_adm' ),
 
 
     path('adm/autores', views.autores_adm, name='autores_adm' ),

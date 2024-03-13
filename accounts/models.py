@@ -43,12 +43,16 @@ class Livro(models.Model):
     tipo = models.CharField(null=True, blank=True, max_length=50)
     genero_fk = models.ManyToManyField(Genero)
 
+    def __str__(self):
+        return self.nome
+
 
 class Estoque(models.Model):
     livro_fk = models.ForeignKey(Livro,null=True, blank=True, on_delete= models.SET_NULL)
     edicao = models.IntegerField()
     reservado = models.BooleanField(default=False)
     alugado = models.BooleanField(default=False)
+    fk_user = models.ForeignKey(User, null=True, blank=True, on_delete= models.SET_NULL)
 
 
 

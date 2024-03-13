@@ -9,13 +9,21 @@
 {% block content %}
 
 
-<br>
 
 <div class='container'>
+    <br>
+
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
+        {{ form.as_p }} 
 
-        <div class="row">
+        <!-- <div class="row">
             
             <div class ='col'>
                 <div class="form-group">
@@ -40,7 +48,7 @@
             <div class ='col'>
                 <div class="form-group">
                     <label for="{{ form.data_lançamento.id_for_label }}">Data:</label>
-                    <input type="date" class="form-control" id="{{ form.data_lançamento.id_for_label }}" name="{{ form.data_lançamento.name }}">
+                    <input type="date" class="form-control" id="{{ form.data_lançamento.id_for_label }}" name="{{ form.data_lançamento.name }}" value="{{ livro.data_lançamento|date:'Y-m-d' }}">
                 </div>
             </div>
 
@@ -93,18 +101,21 @@
                 </div>
             </div>
 
-        </div>
+        </div> -->
 
         <center>
             <br>
+
+            <button type="submit" class="btn btn-primary">Editar</button>
             <br>
 
-            <button type="submit" class="btn btn-primary">Criar</button>
+            <br>
 
     
-            {% for message in messages %}
-                <p id='messages'>{{message}}</p>
-            {% endfor %}
+
+
+
+            
 
         </center>
 

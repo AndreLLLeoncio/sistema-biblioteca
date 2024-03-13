@@ -26,5 +26,9 @@ class EditarUsuarioForm(ModelForm):
 class AdicionarLivroAdm(ModelForm):
     class Meta:
         model = Livro
-        fields = "__all__"
-    
+        fields = ['isbn', 'nome', 'data_lançamento', 'cover', 'fk_autor', 'fk_editora', 'tipo', 'genero_fk']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})

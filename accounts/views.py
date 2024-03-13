@@ -69,26 +69,36 @@ def livro_adm(request, livro_id):
 def deletar_livro_adm(request, livro_id):
     livro = Livro.objects.get(pk=livro_id)
     livro.delete()
+    messages.success(request, 'Livro Deletado com Sucesso ')
     return redirect('livros_adm')
 
 @login_required(login_url='login')
 @staff_member_required
 def adicionar_livro_adm(request):
     if request.method == 'POST':
-        form = AdicionarLivroAdm(request.POST)
+        form = AdicionarLivroAdm(request.POST, request.FILES)
         if form.is_valid():
-            livro = form.save(commit=False)
-            livro.save()
+            form.save()
             messages.success(request, 'Livro Adicionado com Sucesso ')
             return redirect('adicionar_livro_adm')
     else:
         form = AdicionarLivroAdm()
-    
-    autores = Autor.objects.all()
-    generos = Genero.objects.all()
-    editoras = Editora.objects.all()
 
-    return render(request, 'accounts/adm/livros_crud/adicionar_livro_adm.html', {'form':form, 'autores': autores, 'generos':generos, 'editoras':editoras})
+    return render(request, 'accounts/adm/livros_crud/adicionar_livro_adm.html', {'form':form})
+
+
+def editar_livro_adm(request, livro_id):
+    livro = Livro.objects.get(pk=livro_id)
+    if request.method == 'POST':
+        form = AdicionarLivroAdm(request.POST, instance=livro)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Livro Editado com Sucesso ')
+            return redirect('editar_livro_adm', livro.pk)
+    else:
+        form = AdicionarLivroAdm(instance=livro)
+    return render(request, 'accounts/adm/livros_crud/editar_livro_adm.html', {'form': form})
+
 
 @login_required(login_url='login')
 @staff_member_required
@@ -285,6 +295,7 @@ def reservarLivro(request, livro_id):
     if Estoque.objects.filter(livro_fk = livro_id).exists():
         estoque_disponivel = Estoque.objects.filter(livro_fk = livro_id, reservado=False, alugado=False).order_by('id').first()
         if estoque_disponivel:
+            estoque_disponivel.fk_user = request.user
             estoque_disponivel.reservado = True
             estoque_disponivel.save()
             messages.success(request, 'Livro Reservado com Successo')

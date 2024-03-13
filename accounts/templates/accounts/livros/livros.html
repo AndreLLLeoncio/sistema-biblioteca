@@ -4,17 +4,27 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{%static 'accounts/css/livros.css'%}">
+<style>
+    .lista-capas {
+    display: flex;
+    flex-wrap: wrap; /* Isso permite que as divs de capa quebrem para a próxima linha */
+    }
+
+    img{
+        max-width: 240px;
+        margin: 0px 10px 10px 10px;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
+    <br>
 
-    <div class="d-flex flex-row">
+    <div class="lista-capas">
         {% for livro in livros %}
-            <div class='capa'>
                 <a href="{% url 'livro' livro.id %}">
                     <img src="{{ livro.cover.url }}" alt="Capa de {{ livro.nome }}">
                 </a>
-            </div>
         {% endfor %}
     </div>
 

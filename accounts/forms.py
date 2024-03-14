@@ -1,9 +1,8 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Pedido, Livro, Autor
-from django import forms
-from bootstrap_modal_forms.forms import  BSModalModelForm
+from .models import Pedido, Livro, Aluguel
+
 
 class CriarUsuarioForm(UserCreationForm):
     class Meta:
@@ -32,3 +31,15 @@ class AdicionarLivroAdm(ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
+
+
+class RegistrarAluguel(ModelForm):
+    class Meta:
+        model = Aluguel
+        exclude = ['prazo_devolucao']
+'''
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+'''

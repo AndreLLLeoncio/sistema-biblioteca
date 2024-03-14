@@ -9,7 +9,16 @@
 
 {% block content %}
 
-<h1>alugueis</h1>
+<center>
+    <br>
+    <h1>ALUGUEIS</h1>
+    <br>
 
+    <form method='POST'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+</center>
 
 {% endblock %}

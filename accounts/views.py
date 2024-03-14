@@ -1,14 +1,12 @@
-from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, Http404, JsonResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.http import Http404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.urls import reverse_lazy
-from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm
-from bootstrap_modal_forms.generic import BSModalCreateView
-from .models import Livro, Pedido, Autor, Genero, Editora, Estoque
+from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel
+from .models import Livro, Pedido, Autor, Genero, Estoque
+from datetime import datetime, timedelta
 
 # Create your views here.
 
@@ -120,6 +118,7 @@ def adicionar_edicao_adm(request):
         return redirect('livro_adm', livro_id=livro_id)
     else:
         return redirect('livro_adm')
+    
 
 
 
@@ -148,7 +147,31 @@ def generos_adm(request):
 @login_required(login_url='login')
 @staff_member_required
 def alugueis_adm(request):
-    return render(request,'accounts/adm/alugueis_adm.html')
+    if request.method == 'POST':
+        form = RegistrarAluguel(request.POST)
+        if form.is_valid():
+            aluguel = form.save(commit=False)
+
+            estoque = Estoque.objects.get(pk=aluguel.estoque_fk)
+            if estoque.reservado == False and estoque.alugado == False:
+
+                estoque.fk_user = aluguel.user_fk
+                estoque.alugado = True
+                estoque.save()
+
+                dias_alugados = aluguel.dias_alugados
+                prazo_devolucao = datetime.now() + timedelta(days=dias_alugados)
+                aluguel.prazo_devolucao = prazo_devolucao
+                form.save()
+                redirect('alugueis_adm')
+                messages.success(request, 'Livro Alugado com Successo')
+            else:
+                messages.error(request, 'Livro Indisponivel para Aluguel')
+                
+    else:
+        form = RegistrarAluguel()
+
+    return render(request,'accounts/adm/alugueis_adm.html', {'form': form})
 
 
 @login_required(login_url='login')

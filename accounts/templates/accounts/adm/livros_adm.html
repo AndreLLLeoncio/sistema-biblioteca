@@ -16,11 +16,19 @@
     <br>
     <a href="{% url 'adicionar_livro_adm' %}"><button type="button" class="btn btn-light">Adicionar</button></a>
 
+
 </center>
 
 <br>
 
 <div class='container'>
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}}
+    </div>
+    <br>
+    {% endfor %}
+    
     <table class="table">
         <thead class="thead-dark">
           <tr>

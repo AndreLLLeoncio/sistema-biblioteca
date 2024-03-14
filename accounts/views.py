@@ -152,7 +152,8 @@ def alugueis_adm(request):
         if form.is_valid():
             aluguel = form.save(commit=False)
 
-            estoque = Estoque.objects.get(pk=aluguel.estoque_fk)
+            estoque_pk = aluguel.estoque_fk.id
+            estoque = Estoque.objects.get(pk=estoque_pk)
             if estoque.reservado == False and estoque.alugado == False:
 
                 estoque.fk_user = aluguel.user_fk
@@ -163,15 +164,33 @@ def alugueis_adm(request):
                 prazo_devolucao = datetime.now() + timedelta(days=dias_alugados)
                 aluguel.prazo_devolucao = prazo_devolucao
                 form.save()
-                redirect('alugueis_adm')
                 messages.success(request, 'Livro Alugado com Successo')
+                return redirect('alugueis_adm')
             else:
                 messages.error(request, 'Livro Indisponivel para Aluguel')
+                
+            return redirect('alugueis_adm')
                 
     else:
         form = RegistrarAluguel()
 
     return render(request,'accounts/adm/alugueis_adm.html', {'form': form})
+
+'''
+@login_required(login_url='login')
+@staff_member_required
+def adicionar_livro_adm(request):
+    if request.method == 'POST':
+        form = AdicionarLivroAdm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Livro Adicionado com Sucesso ')
+            return redirect('adicionar_livro_adm')
+    else:
+        form = AdicionarLivroAdm()
+
+    return render(request, 'accounts/adm/livros_crud/adicionar_livro_adm.html', {'form':form})
+'''
 
 
 @login_required(login_url='login')

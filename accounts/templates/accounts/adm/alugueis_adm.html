@@ -9,16 +9,25 @@
 
 {% block content %}
 
-<center>
-    <br>
-    <h1>ALUGUEIS</h1>
-    <br>
+<div class='container'>
+    <center>
+        <br>
+        <h1>ALUGUEIS</h1>
+        <br>
 
-    <form method='POST'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
-    </form>
-</center>
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{message}}
+        </div>
+        <br>
+        {% endfor %}
+
+        <form method='POST'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </center>
+</div>
 
 {% endblock %}

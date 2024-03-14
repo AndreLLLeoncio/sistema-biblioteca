@@ -6,36 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-
+    <link rel="stylesheet" href="{%static 'accounts/css/register.css'%}">
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-        .left-area {
-            width: 50%;
-            height: 100%;
-            background-color: #f0f0f0;
-            float: left;
-        }
-        .right-area {
-            width: 50%;
-            height: 100%;
-            float: right;
-        }
     </style>
 </head>
 
 <body>
 
-    <div class="left-area">
-        <img src="{% static 'accounts/img/Frame1.png'%}">
-    </div>
-
-    <div class="right-area">
-        {% include "accounts/components/login_form.html" %}
+    <div class="pagina">
+        <div class="div1">
+            <img id='imagem' src="{% static 'accounts/img/Library-rafiki.png'%}">
+        </div>
+        <div class="div2">
+            {% include "accounts/components/login_form.html" %}
+        </div>
     </div>
 
 </body>

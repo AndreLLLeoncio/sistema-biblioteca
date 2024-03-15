@@ -90,7 +90,10 @@
             <div class ='col'>
                 <div class="form-group">
                     <label for="{{ form.tipo.id_for_label }}">Tipo</label>
-                    {{ form.tipo }}
+                    <select class="form-control" id="id_tipo" name="tipo">
+                        <option value="Ficçao">Ficção</option>
+                        <option value="Não Ficção">Nao Ficção</option>
+                    </select>
                 </div>
             </div>
 

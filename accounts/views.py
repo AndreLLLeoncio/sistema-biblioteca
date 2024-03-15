@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel
-from .models import Livro, Pedido, Autor, Genero, Estoque
+from .models import Livro, Pedido, Autor, Genero, Estoque, Aluguel
 from datetime import datetime, timedelta
 
 # Create your views here.
@@ -176,21 +176,6 @@ def alugueis_adm(request):
 
     return render(request,'accounts/adm/alugueis_adm.html', {'form': form})
 
-'''
-@login_required(login_url='login')
-@staff_member_required
-def adicionar_livro_adm(request):
-    if request.method == 'POST':
-        form = AdicionarLivroAdm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Livro Adicionado com Sucesso ')
-            return redirect('adicionar_livro_adm')
-    else:
-        form = AdicionarLivroAdm()
-
-    return render(request, 'accounts/adm/livros_crud/adicionar_livro_adm.html', {'form':form})
-'''
 
 
 @login_required(login_url='login')
@@ -329,7 +314,10 @@ def pedidoPage(request):
 
 @login_required(login_url='login')
 def meusLivros(request):
-    return render(request, 'accounts/user/meus_livros.html')
+    usuario = request.user
+    alugueis = Aluguel.objects.filter(user_fk = usuario)
+
+    return render(request,'accounts/user/meus_livros.html', {'alugueis': alugueis})
 
 
 @login_required(login_url='login')
@@ -346,6 +334,8 @@ def reservarLivro(request, livro_id):
     else:
         messages.error(request, 'Ainda não temos cópias para este livro')
     return redirect('livro',livro_id=livro_id)
+
+
 
 
 

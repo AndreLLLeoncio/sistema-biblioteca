@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel
+from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel, AdicionarAutorAdm
 from .models import Livro, Pedido, Autor, Genero, Estoque, Aluguel
 from datetime import datetime, timedelta
 
@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 
 
 
-#   ADM
+# ============================================   ADM   ===========================================
 
 #  Pagina Inicial do ADM
 @login_required(login_url='login')
@@ -130,12 +130,29 @@ def adicionar_edicao_adm(request):
 
 # ADM  AUTOR
 
-
 @login_required(login_url='login')
 @staff_member_required
 def autores_adm(request):
     autores = Autor.objects.all()
-    return render(request,'accounts/adm/autores_adm.html', {"autores": autores})
+    return render(request,'accounts/adm/autores_crud/autores_adm.html', {"autores": autores})
+
+
+@login_required(login_url='login')
+@staff_member_required
+def adicionar_autor_adm(request):
+    if request.method == 'POST':
+        form = AdicionarAutorAdm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Autor Adicionado com Sucesso ')
+            return redirect('adicionar_autor_adm')
+    else:
+        form = AdicionarAutorAdm()
+
+    return render(request, 'accounts/adm/autores_crud/adicionar_autor_adm.html', {'form':form})
+
+
+
 
 
 @login_required(login_url='login')
@@ -186,9 +203,6 @@ def devolucoes_adm(request):
 
 
 
-
-
-
 # ADM  GENEROS
 
 @login_required(login_url='login')
@@ -200,7 +214,13 @@ def generos_adm(request):
 
 
 
-# Login / Cadastro / Logout
+
+
+
+
+
+
+# ============================================   Login / Cadastro / Logout   ===========================================
 
 
 def registerPage(request):
@@ -254,7 +274,7 @@ def sairUsuario(request):
 
 
 
-# USUARIO
+# ============================================   USUARIO   ===========================================
 
 
 @login_required(login_url='login')

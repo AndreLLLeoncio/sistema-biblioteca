@@ -134,22 +134,19 @@ def adicionar_edicao_adm(request):
 @staff_member_required
 def autores_adm(request):
     autores = Autor.objects.all()
-    return render(request,'accounts/adm/autores_crud/autores_adm.html', {"autores": autores})
 
-
-@login_required(login_url='login')
-@staff_member_required
-def adicionar_autor_adm(request):
     if request.method == 'POST':
-        form = AdicionarAutorAdm(request.POST, request.FILES)
+        form = AdicionarAutorAdm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Autor Adicionado com Sucesso ')
-            return redirect('adicionar_autor_adm')
+            return redirect('autores_adm')
     else:
         form = AdicionarAutorAdm()
+        
+    return render(request,'accounts/adm/autores_crud/autores_adm.html', {"autores": autores, 'form':form})
 
-    return render(request, 'accounts/adm/autores_crud/adicionar_autor_adm.html', {'form':form})
+
 
 
 

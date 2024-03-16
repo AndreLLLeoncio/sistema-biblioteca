@@ -9,19 +9,20 @@
 
 {% block content %}
 
-{% include "accounts/adm/autores_crud/adicionar_autor_adm.html" %}
-
+{% include 'accounts/adm/autores_crud/adicionar_autor_adm.html'%}
 <br>
 
 <center>
     <h1>AUTORES</h1>
     <br>
     {% comment %}<a href="{% url 'adicionar_autor_adm'%}"><button type="button" class="btn btn-light">Adicionar</button></a>{% endcomment %}
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-      </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adicionarAutorModal">
+      Cadastrar Autor
+    </button>
 
 </center>
+
+
 
 <br>
 

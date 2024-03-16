@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     {% block styles%}{%endblock%}
+    <link rel="shortcut icon" type="image/png" href="{% static 'fa/favicon.png' %}" >
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'accounts/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/css/base.css' %}">    
     
     
 </head>
@@ -23,9 +24,8 @@
 
 
 
-
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
 
     {% block scripts %}{%endblock%}
     

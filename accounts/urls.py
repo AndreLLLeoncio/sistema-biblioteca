@@ -37,7 +37,6 @@ urlpatterns = [
 
 
     path('adm/autores', views.autores_adm, name='autores_adm' ),
-    path('adm/autores/adicionar_autor_adm', views.adicionar_autor_adm, name='adicionar_autor_adm' ),
 
 
 

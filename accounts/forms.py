@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Pedido, Livro, Aluguel, Autor
@@ -45,9 +46,12 @@ class AdicionarAutorAdm(ModelForm):
 
 
 class RegistrarAluguel(ModelForm):
+
+    nome_livro = forms.CharField(label='Nome do Livro', max_length=100)
+
     class Meta:
         model = Aluguel
-        exclude = ['prazo_devolucao']
+        fields = ['nome_livro', 'user_fk', 'dias_alugados'] 
 '''
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

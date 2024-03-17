@@ -1,0 +1,30 @@
+{% extends "accounts/test.html" %}
+
+{%load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{%static 'accounts/css/perfil.css'%}">
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Perfil do Usuario</h1>
+<p>Nome de Usuario: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateUserModal">
+  Atualizar Usuário
+</button>
+
+{% for message in messages %}
+<p id='messages'>{{message}}</p>
+{% endfor %}
+
+{%include 'accounts/user/update.html'%}
+
+
+
+
+{% endblock %}
+

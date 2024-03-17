@@ -25,6 +25,7 @@ urlpatterns = [
 
 
     path('adm/', views.pagina_inicial_adm, name='adm_home' ),
+    path('adm/perfil', views.perfil_adm, name='perfil_adm' ),
 
     path('adm/pedidos', views.pagina_pedidos_adm, name='pedidos_adm' ),
 

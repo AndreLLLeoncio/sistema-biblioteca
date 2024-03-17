@@ -1,29 +1,37 @@
-{% comment %} <!-- modal.html -->
-<div class="modal fade" id="myModal">
+<div class='atualizar-usuario-modal'>
+  <div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-    
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Seu Formulário</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+      <div class="modal-content">
+
+          <div class="modal-header">
+              <h5 class="modal-title" id="updateUserModalLabel">Atualizar Usuário</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+              <form method="post">
+                  {% csrf_token %}
+
+                  <div class="form-group">
+                      <label for="username">Nome de Usuario</label>
+                      {{ user_form.username }}               
+                  </div>
+
+                  <div class="form-group">
+                      <label for="email">Email</label>
+                      {{ user_form.email }}            
+                  </div>
+
+          </div>
+
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Atualizar</button>
+          </div>
+
+      </form>
+
       </div>
-      
-      <!-- Modal Body com o formulário -->
-      <div class="modal-body">
-        <!-- Formulário -->
-        <form method="post" action="{% url 'atualizar_usuario' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
-      </div>
-      
-      <!-- Modal Footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-      </div>
-      
-    </div>
   </div>
-</div> {% endcomment %}
+  </div>
+</div>

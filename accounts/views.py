@@ -23,6 +23,25 @@ def pagina_inicial_adm(request):
 
 
 
+
+@login_required(login_url='login')
+@staff_member_required
+def perfil_adm(request):
+    user = request.user
+    if request.method == 'POST':
+        user_form = EditarUsuarioForm(request.POST, instance=request.user)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Usuario Atualizado com Sucesso')
+            return redirect(to='perfil')
+    else:
+        user_form = EditarUsuarioForm(instance=request.user)
+
+    return render(request, 'accounts/adm/perfil_adm.html', {'user_form': user_form})
+
+
+
 # ADM  Pedido
 @login_required(login_url='login')
 @staff_member_required
@@ -292,7 +311,7 @@ def perfil(request):
     else:
         user_form = EditarUsuarioForm(instance=request.user)
 
-    return render(request, 'accounts/perfil.html', {'user_form': user_form})
+    return render(request, 'accounts/user/perfil.html', {'user_form': user_form})
 
 
 @login_required(login_url='login')

@@ -1,0 +1,22 @@
+.pagina {
+    display: flex;
+}
+.div1, .div2 {
+    width: 50%;
+}
+
+.div1 {
+    width: 50%;
+}
+.div2 {
+    width: 50%;
+    align-items: center;
+}
+
+.formulario{
+    width: 50%;
+}
+.lista-itens {
+    max-height: 90vh;
+    overflow-y: auto;
+}

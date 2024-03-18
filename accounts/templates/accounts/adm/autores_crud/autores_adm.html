@@ -10,12 +10,16 @@
 {% block content %}
 
 {% include 'accounts/adm/autores_crud/adicionar_autor_adm.html'%}
+{% include 'accounts/adm/autores_crud/delete_autor.html'%}
+
+
+
+
 <br>
 
 <center>
     <h1>AUTORES</h1>
     <br>
-    {% comment %}<a href="{% url 'adicionar_autor_adm'%}"><button type="button" class="btn btn-light">Adicionar</button></a>{% endcomment %}
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adicionarAutorModal">
       Cadastrar Autor
     </button>
@@ -55,12 +59,7 @@
             <td>
                 <div class='icones'>
 
-                    <a href="#">
-                        <i class="fas fa-eye" id='visualizar'></i>
-                    </a>
-                    
-
-                    <a href="#">
+                    <a href="{% url 'deletar_autor_adm' autor_id=autor.id %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{autor.id}}">
                         <i class="fas fa-trash" id='deletar'></i>
                     </a>
 
@@ -78,6 +77,27 @@
     </table>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+  $(document).ready(function() {
+    // Function to handle click on delete link
+    $(document).on('click', '.confirm-delete', function (e) {
+      e.preventDefault(); // Prevent the default action
+      var deleteUrl = $(this).attr("href"); // Get the delete URL
+      $("#confirmDeleteModal").modal('show'); // Show the modal
+      $("#confirmDeleteButtonModal").attr("href", deleteUrl); // Set the delete URL as the href of the delete button in the modal
+    });
+    
+    // Function to handle click on confirm delete button in the modal
+    $(document).on('click', '#confirmDeleteButtonModal', function () {
+      var deleteUrl = $(this).attr("href"); // Get the delete URL from the delete button
+      window.location = deleteUrl; // Redirect to the delete URL
+    });
+  });
+
+</script>
 
 
 {% endblock %}

@@ -3,31 +3,71 @@
 {%load static %}
 
 {% block styles %}
-
+<link rel="stylesheet" href="{%static 'accounts/adm/css/alugueis.css'%}">
 {% endblock %}
 
 
 {% block content %}
 
-<div class='container'>
-    <center>
-        <br>
-        <h1>ALUGUEIS</h1>
-        <br>
 
-        {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{message}}
+<div class="pagina">
+    <div class="div1">
+        <div class='container'>
+            <center>
+                <br>
+                <br>
+                <h1>REGISTRAR ALUGUÉL</h1>
+                <br>
+        
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{message}}
+                </div>
+                <br>
+                {% endfor %}
+                <div class='formulario'>
+                    <form method='POST'>
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </form>
+                </div>
+            </center>
+        </div>
+    </div>
+
+
+    <div class="div2 lista-itens">
+        <center>
+            <br>
+        {% for aluguel in alugueis %}
+        <div class='container'>
+            <div class="card text-center" style="max-width: 75%;">
+                <div class="card-header" style="padding: 5px;">
+                    {{ aluguel.user_fk}}
+                </div>
+                <div class="card-body" style="padding: 5px;">
+                    <h5 class="card-title" style="font-size: 14px; margin-bottom: 5px;">Special title treatment</h5>
+                    <p class="card-text" style="font-size: 12px;">With supporting text below as a natural lead-in to additional content.</p>
+                    
+                    <div class="card-footer text-muted">
+                        <a href="#" class="btn btn-primary" style="font-size: 12px; padding: 5px 5px;">Registrar Devolução</a>
+                      </div>
+                </div>
+            </div>
         </div>
         <br>
-        {% endfor %}
-
-        <form method='POST'>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
-        </form>
+    
+        {%endfor%}
     </center>
+    </div>
+    
 </div>
+
+
+
+
+
 
 {% endblock %}

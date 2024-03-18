@@ -1,3 +1,5 @@
+
+
 .icones{
     display: inline-flex;
 }
@@ -6,6 +8,10 @@
 .adicionar-autor-modal{
     color:black;
 }
+.deletar-autor-modal{
+    color:black;
+}
+
 
 #visualizar{
     color: blue;

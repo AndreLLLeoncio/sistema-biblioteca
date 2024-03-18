@@ -23,7 +23,6 @@ urlpatterns = [
 
 
 
-
     path('adm/', views.pagina_inicial_adm, name='adm_home' ),
     path('adm/perfil', views.perfil_adm, name='perfil_adm' ),
 
@@ -38,6 +37,7 @@ urlpatterns = [
 
 
     path('adm/autores', views.autores_adm, name='autores_adm' ),
+    path('deletar_autor_adm/<int:autor_id>', views.deletar_autor_adm, name='deletar_autor_adm'),
 
 
 

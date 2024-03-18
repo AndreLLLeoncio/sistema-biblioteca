@@ -59,7 +59,7 @@ class Estoque(models.Model):
 class Aluguel(models.Model):
     estoque_fk = models.ForeignKey(Estoque, null=True, blank=True, on_delete= models.SET_NULL)
     user_fk = models.ForeignKey(User, null=True, blank=True, on_delete= models.SET_NULL)
-    data_alugada = models.DateField(auto_now_add= True)
+    data_alugada = models.DateField()
     dias_alugados = models.IntegerField()
     prazo_devolucao = models.DateField()
 

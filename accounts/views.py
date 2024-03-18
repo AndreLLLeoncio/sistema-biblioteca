@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -166,16 +166,19 @@ def autores_adm(request):
     return render(request,'accounts/adm/autores_crud/autores_adm.html', {"autores": autores, 'form':form})
 
 
-
-
-
-
-
 @login_required(login_url='login')
 @staff_member_required
-def generos_adm(request):
-    return render(request,'accounts/adm/generos_adm.html')
+def deletar_autor_adm(request, autor_id):
+    autor = Autor.objects.get(pk=autor_id)
+    autor.delete()
+    messages.success(request, 'Autor Deletado com Sucesso ')
+    return redirect('autores_adm')
 
+
+
+
+
+# ADM  ALUGUEL
 
 @login_required(login_url='login')
 @staff_member_required
@@ -196,6 +199,7 @@ def alugueis_adm(request):
                 dias_alugados = aluguel.dias_alugados
                 prazo_devolucao = datetime.now() + timedelta(days=dias_alugados)
                 aluguel.prazo_devolucao = prazo_devolucao
+                aluguel.data_alugada = datetime.now()
                 form.save()
                 messages.success(request, 'Livro Alugado com Successo')
                 return redirect('alugueis_adm')
@@ -207,7 +211,12 @@ def alugueis_adm(request):
     else:
         form = RegistrarAluguel()
 
-    return render(request,'accounts/adm/alugueis_adm.html', {'form': form})
+    alugueis = Aluguel.objects.all()
+
+
+    return render(request,'accounts/adm/alugueis_adm.html', {'form': form, 'alugueis':alugueis})
+
+
 
 
 

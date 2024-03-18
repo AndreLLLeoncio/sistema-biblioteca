@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Pedido, Livro, Aluguel, Autor
+from .models import Pedido, Livro, Aluguel, Autor, Estoque
 
 
 class CriarUsuarioForm(UserCreationForm):
@@ -46,15 +46,16 @@ class AdicionarAutorAdm(ModelForm):
 
 
 class RegistrarAluguel(ModelForm):
-
-    nome_livro = forms.CharField(label='Nome do Livro', max_length=100)
-
-    class Meta:
-        model = Aluguel
-        fields = ['nome_livro', 'user_fk', 'dias_alugados'] 
-'''
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
-'''
+
+        estoques_disponiveis_ids = Estoque.objects.filter(reservado=False, alugado=False).values_list('id', flat=True)
+        self.fields['estoque_fk'].queryset = Estoque.objects.filter(id__in=estoques_disponiveis_ids)
+        self.fields['estoque_fk'].label_from_instance = lambda obj: f"{obj.livro_fk.nome if obj.livro_fk else 'Livro não encontrado'} - Edição {obj.edicao}"
+    class Meta:
+        model = Aluguel
+        fields = ['estoque_fk', 'user_fk', 'dias_alugados']
+
+

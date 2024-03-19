@@ -3,13 +3,66 @@
 {%load static %}
 
 {% block styles %}
-
+<link rel="stylesheet" href="{%static 'accounts/adm/css/alugueis.css'%}">
 {% endblock %}
 
 
 {% block content %}
 
-<h1>devoluções</h1>
+<div class="pagina">
+    <div class="div1">
+        <div class='container'>
+            <center>
+                <br>
+                <br>
+                <h1>REGISTRAR DEVOLUÇÃO</h1>
+                <br>
+        
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{message}}
+                </div>
+                <br>
+                {% endfor %}
+                <div class='formulario'>
+                    <form method='POST'>
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </form>
+                </div>
+            </center>
+        </div>
+    </div>
+
+
+    <div class="div2 lista-itens">
+        <center>
+            <br>
+        {% for devolucao in devolucoes %}
+        <div class='container'>
+            <div class="card text-center" style="max-width: 75%;">
+                <div class="card-header" style="padding: 5px;">
+                    {{ devolucao.user_fk}}
+                </div>
+                <div class="card-body" style="padding: 5px;">
+                    <h5 class="card-title" style="font-size: 14px; margin-bottom: 5px;">Nome do Livro</h5>
+                    <p class="card-text" style="font-size: 12px;">Prazo da Devolução</p>
+                    <p class="card-text" style="font-size: 12px;">Data da Devolução: {{devolucao.data_devolucao}}</p>
+                    
+
+                </div>
+            </div>
+        </div>
+        <br>
+    
+        {%endfor%}
+    </center>
+    </div>
+    
+</div>
+
 
 
 {% endblock %}

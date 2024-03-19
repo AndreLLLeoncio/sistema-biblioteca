@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect
-from django.http import Http404, JsonResponse
+from django.shortcuts import get_object_or_404, render, redirect
+from django.views.generic import UpdateView
+from django.http import Http404, JsonResponse, HttpResponse
 from django.contrib import messages
+from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel, AdicionarAutorAdm
-from .models import Livro, Pedido, Autor, Genero, Estoque, Aluguel
+from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel, AdicionarAutorAdm, DevolucaoForm
+from .models import Livro, Pedido, Autor, Genero, Estoque, Aluguel, Devolucao
 from datetime import datetime, timedelta
+
 
 # Create your views here.
 
@@ -68,7 +71,16 @@ def pedido_adm(request, pedido_id):
 @staff_member_required
 def livros_adm(request):
     livros = Livro.objects.prefetch_related('fk_autor')
-    return render(request,'accounts/adm/livros_adm.html', {'livros': livros})
+    autores = Autor.objects.all()
+    query = request.GET.get('q')
+    if query:
+        livros = livros.filter(nome__icontains=query)
+
+    autor_id = request.GET.get('autor')
+    if autor_id:
+        livros = livros.filter(fk_autor__id=autor_id)
+    
+    return render(request,'accounts/adm/livros_crud/livros_adm.html', {'livros': livros , 'autores': autores})
 
 @login_required(login_url='login')
 @staff_member_required
@@ -176,6 +188,25 @@ def deletar_autor_adm(request, autor_id):
 
 
 
+def editar_autor_adm(request, autor_id):
+    autor = Autor.objects.get(pk=autor_id)
+    if request.method == 'POST':
+        form = AdicionarAutorAdm(request.POST, instance=autor)
+        form.save()
+        messages.success(request, 'Livro Editado com Sucesso ')
+        return redirect('editar_autor_adm', autor.pk)
+    else:
+        form = AdicionarAutorAdm(instance=autor)
+    return render(request, 'accounts/adm/autores_crud/editar_autor_adm.html', {'form': form})
+
+
+
+
+
+
+
+
+
 
 
 # ADM  ALUGUEL
@@ -220,10 +251,49 @@ def alugueis_adm(request):
 
 
 
+
+
+
+
+
+
+
+# ADM  DEVOLUÇÕES
+
 @login_required(login_url='login')
 @staff_member_required
 def devolucoes_adm(request):
-    return render(request,'accounts/adm/devolucoes_adm.html')
+    if request.method == 'POST':
+        form = DevolucaoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('devolucoes_adm') 
+    else:
+        form = DevolucaoForm()
+
+    devolucoes = Devolucao.objects.all()
+    return render(request, 'accounts/adm/devolucoes_adm.html', {'form': form, 'devolucoes':devolucoes})
+
+
+
+
+
+@login_required(login_url='login')
+@staff_member_required
+def testes(request):
+    itens = Autor.objects.all()
+    return render(request,'accounts/adm/testes.html', {'itens': itens})
+
+
+
+
+
+
+
+
+
+
+
 
 
 

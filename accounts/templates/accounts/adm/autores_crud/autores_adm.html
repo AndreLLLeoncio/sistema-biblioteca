@@ -10,9 +10,7 @@
 {% block content %}
 
 {% include 'accounts/adm/autores_crud/adicionar_autor_adm.html'%}
-{% include 'accounts/adm/autores_crud/delete_autor.html'%}
-
-
+{% include 'accounts/adm/deletar.html'%}
 
 
 <br>
@@ -20,12 +18,11 @@
 <center>
     <h1>AUTORES</h1>
     <br>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adicionarAutorModal">
+    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#adicionarAutorModal">
       Cadastrar Autor
     </button>
 
 </center>
-
 
 
 <br>
@@ -63,8 +60,8 @@
                         <i class="fas fa-trash" id='deletar'></i>
                     </a>
 
-                    <a href="#">
-                        <i class="fas fa-pen" id='editar'></i>
+                    <a href="{% url 'editar_autor_adm' autor.id %}">
+                      <i class="fas fa-pen" id='editar'></i>
                     </a>
 
                 </div>
@@ -77,27 +74,49 @@
     </table>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<div id="modal-editar" style="display: none;">
+  <form id="form-editar-item" method="post">
+      {% csrf_token %}
+      <input type="text" id="nome" name="nome">
+      <textarea id="descricao" name="descricao"></textarea>
+      <button type="submit">Salvar</button>
+  </form>
+</div>
+
+
+
+
+{% block scripts%} 
+<script src="{% static 'accounts/adm/js/delete.js' %}"></script>
 
 <script>
-
   $(document).ready(function() {
-    // Function to handle click on delete link
-    $(document).on('click', '.confirm-delete', function (e) {
-      e.preventDefault(); // Prevent the default action
-      var deleteUrl = $(this).attr("href"); // Get the delete URL
-      $("#confirmDeleteModal").modal('show'); // Show the modal
-      $("#confirmDeleteButtonModal").attr("href", deleteUrl); // Set the delete URL as the href of the delete button in the modal
-    });
-    
-    // Function to handle click on confirm delete button in the modal
-    $(document).on('click', '#confirmDeleteButtonModal', function () {
-      var deleteUrl = $(this).attr("href"); // Get the delete URL from the delete button
-      window.location = deleteUrl; // Redirect to the delete URL
-    });
+      $('.editar-item').click(function() {
+          var itemId = $(this).data('item-id');
+          $.get('/editar-item/' + itemId + '/', function(data) {
+              $('#nome').val(data.nome);
+              $('#data_nascimento').val(data.data_nascimento);
+              $('#nacionalidade').val(data.nacionalidade);
+              $('#modal-editar').show();
+          });
+      });
+  
+      $('#form-editar-item').submit(function(e) {
+          e.preventDefault();
+          var formData = $(this).serialize();
+          $.post($(this).attr('action'), formData, function(data) {
+              if (data.success) {
+                  // Atualizar a página ou fazer outra ação de feedback
+                  location.reload();
+              } else {
+                  alert('Erro ao salvar as alterações.');
+              }
+          });
+      });
   });
-
-</script>
-
+  </script>
+{%endblock%}
 
 {% endblock %}

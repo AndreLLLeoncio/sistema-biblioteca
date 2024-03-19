@@ -30,7 +30,7 @@ urlpatterns = [
 
     path('adm/livros', views.livros_adm, name='livros_adm' ),
     path('adm/livros/<int:livro_id>', views.livro_adm, name='livro_adm' ),
-    path('deletar_livro_adm/<livro_id>', views.deletar_livro_adm, name='deletar_livro_adm'),
+    path('deletar_livro_adm/<int:livro_id>', views.deletar_livro_adm, name='deletar_livro_adm'),
     path('adicionar_edicao_adm/', views.adicionar_edicao_adm, name='adicionar_edicao_adm'),
     path('adm/livros/adicionar_livro_adm', views.adicionar_livro_adm, name='adicionar_livro_adm' ),
     path('editar_livro_adm/<livro_id>', views.editar_livro_adm, name='editar_livro_adm' ),
@@ -38,6 +38,11 @@ urlpatterns = [
 
     path('adm/autores', views.autores_adm, name='autores_adm' ),
     path('deletar_autor_adm/<int:autor_id>', views.deletar_autor_adm, name='deletar_autor_adm'),
+    path('editar_autor_adm/<autor_id>/', views.editar_autor_adm, name='editar_autor_adm'),
+
+
+    path('adm/testes', views.testes, name='testes' ),
+
 
 
 

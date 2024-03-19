@@ -10,9 +10,10 @@
 
 
 <center>
-    <br>
-    <h1>Editar Livro<h1>
-  </center>
+  <br>
+  <h1>Editar Autor<h1>
+</center>
+
 <div class='container'>
 
 
@@ -25,11 +26,14 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }} 
-        
+
         <center>
             <br>
             <button type="submit" class="btn btn-primary">Editar</button>
+            <br>
+
         </center>
+
 
     </form>
 </div>

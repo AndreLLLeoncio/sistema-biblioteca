@@ -1,0 +1,69 @@
+{% extends "accounts/adm/base_adm.html" %}
+
+{%load static %}
+
+{% block styles %}
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Lista de Itens</h1>
+
+<ul>
+{% for item in itens %}
+    <li>{{ item.nome }} - {{ item.data_nascimento }} <button class="editar-item" data-item-id="{{ item.id }}">Editar</button></li>
+{% endfor %}
+</ul>
+
+<!-- Modal de Edição -->
+<div id="modal-editar" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black;">
+    <button id="fechar-modal">Fechar</button>
+    <form id="form-editar-autor" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="autor-id" name="autor_id">
+        <label for="nome">Nome:</label><br>
+        <input type="text" id="nome" name="nome"><br>
+        <label for="data_nascimento">Data de Nascimento:</label><br>
+        <input type="date" id="data_nascimento" name="data_nascimento"><br>
+        <label for="nacionalidade">Nacionalidade:</label><br>
+        <input type="text" id="nacionalidade" name="nacionalidade"><br>
+        <button type="submit">Salvar</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.editar-item').click(function() {
+            var autorId = $(this).data('item-id');
+            $.get('/editar-autor/' + autorId + '/', function(data) {
+                $('#autor-id').val(autorId);
+                $('#nome').val(data.nome);
+                $('#data_nascimento').val(data.data_nascimento);
+                $('#nacionalidade').val(data.nacionalidade);
+                $('#modal-editar').show();
+            });
+        });
+    
+        $('#fechar-modal').click(function() {
+            $('#modal-editar').hide();
+        });
+    
+        $('#form-editar-autor').submit(function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.post($(this).attr('action'), formData, function(data) {
+                if (data.success) {
+                    $('#modal-editar').hide();
+                    location.reload();
+                } else {
+                    alert('Erro ao salvar as alterações.');
+                }
+            });
+        });
+    });
+    
+</script>
+
+{% endblock %}

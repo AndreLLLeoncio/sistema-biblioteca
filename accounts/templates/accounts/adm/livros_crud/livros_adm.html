@@ -9,11 +9,35 @@
 
 {% block content %}
 
+{% include 'accounts/adm/deletar.html'%}
+
+
 <br>
 
 <center>
     <h1>LIVROS</h1>
     <br>
+    <div class='filtros'>
+        <form method="GET">
+            <input type="text" name="q" placeholder="Buscar por nome do livro">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
+        <form method="GET" class="form-inline">
+            <div class="form-group mr-2">
+                <label for="autor" class="mr-2">Filtrar por Autor:</label>
+                <select name="autor" id="autor" class="form-control col-sm-6">
+                    <option value="">Todos os Autores</option>
+                    {% for autor in autores %}
+                        <option value="{{ autor.id }}">{{ autor.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
+    </div>
+
+
     <a href="{% url 'adicionar_livro_adm' %}"><button type="button" class="btn btn-light">Adicionar</button></a>
 
 
@@ -58,7 +82,7 @@
                     </a>
                     
 
-                    <a href="{% url 'deletar_livro_adm' livro.id %}">
+                    <a href="{% url 'deletar_livro_adm' livro_id=livro.id %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{livro.id}}">
                         <i class="fas fa-trash" id='deletar'></i>
                     </a>
 
@@ -71,15 +95,20 @@
             </td>
 
           </tr>
+          {% empty %}
+          <tr>
+              <td colspan="5">Nenhum livro encontrado.</td>
+          </tr> 
           {% endfor%}
         </tbody>
     </table>
 </div>
 
 
+{% block scripts%} 
+<script src="{% static 'accounts/adm/js/delete.js' %}"></script>
 
-{% block scripts %}
-<script src="{% static 'accounts/adm/js/livros.js' %}"></script>
+
 {%endblock%}
 
 {% endblock %}

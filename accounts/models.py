@@ -67,7 +67,7 @@ class Aluguel(models.Model):
 class Devolucao(models.Model):
     estoque_fk = models.ForeignKey(Estoque, null=True, blank=True, on_delete= models.SET_NULL)
     user_fk = models.ForeignKey(User, null=True, blank=True, on_delete= models.SET_NULL)
-    data_devolucao = models.DateField(auto_now_add= True)
+    data_devolucao = models.DateField()
 
 
 class Mensagem(models.Model):

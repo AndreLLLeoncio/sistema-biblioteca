@@ -95,7 +95,7 @@ class DevolucaoForm(forms.ModelForm):
 
 
 
-class Aluguel(ModelForm):
+class AluguelForm(ModelForm):
 
     class Meta:
         model = Aluguel

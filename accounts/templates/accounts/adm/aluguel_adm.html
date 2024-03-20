@@ -5,11 +5,22 @@
 {% block styles %}
 {% endblock %}
 
-
 {% block content %}
 
-
-
-
+<div class="container">
+    <center>
+        <br>
+        <br>
+        <h2>Registrar Aluguel</h2>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <button type="submit" class="btn btn-success">Registrar</button>
+            <a href="{% url 'livros_adm' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </center>
+</div>
 
 {% endblock %}

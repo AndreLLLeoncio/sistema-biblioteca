@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel, AdicionarAutorAdm, DevolucaoForm
+from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel, AdicionarAutorAdm, DevolucaoForm, AluguelForm
 from .models import Livro, Pedido, Autor, Genero, Estoque, Aluguel, Devolucao
 from datetime import datetime, timedelta
 from django.db.models import Count
@@ -27,13 +27,18 @@ def pagina_inicial_adm(request):
     tipos = [data['tipo'] for data in dataset]
     totais = [data['total'] for data in dataset]
 
+    autores_dataset = Autor.objects.annotate(total_books=Count('livro')).order_by('nome')
+    autores = [autor.nome for autor in autores_dataset]
+    livros_por_autor = [autor.total_books for autor in autores_dataset]
+
     context = {
         'tipos': tipos,
         'totais': totais,
+        'autores': autores,
+        'livros_por_autor': livros_por_autor,
     }
-    return render(request,'accounts/adm/pagina_inicial_adm.html', context)
 
-
+    return render(request, 'accounts/adm/pagina_inicial_adm.html', context)
 
 
 @login_required(login_url='login')
@@ -94,8 +99,8 @@ def livros_adm(request):
 @login_required(login_url='login')
 @staff_member_required
 def livro_adm(request, livro_id):
-    livro = Livro.objects.get(pk=livro_id)
     copia_disponivel = Estoque.objects.filter(livro_fk = livro_id, reservado=False, alugado=False).exists()
+    livro = Livro.objects.get(pk=livro_id)
     autores = livro.fk_autor.all()
     generos = livro.genero_fk.all()
     if livro is not None:
@@ -106,25 +111,32 @@ def livro_adm(request, livro_id):
 
 @login_required(login_url='login')
 @staff_member_required
-def alugarLivro(request, livro_id):
+def alugar_livro(request, livro_id):
     estoque_disponivel = Estoque.objects.filter(livro_fk=livro_id, reservado=False, alugado=False).order_by('id').first()
     if estoque_disponivel:
         if request.method == 'POST':
-            form = Aluguel(request.POST)
+            form = AluguelForm(request.POST)
             if form.is_valid():
                 aluguel = form.save(commit=False)
                 aluguel.estoque_fk = estoque_disponivel
+                aluguel.data_alugada = datetime.now()
+                dias_alugados = aluguel.dias_alugados
+                prazo_devolucao = datetime.now() + timedelta(days=dias_alugados)
+                aluguel.prazo_devolucao = prazo_devolucao
                 aluguel.save()
-                # Redirecionar para página de detalhes do livro ou outra página desejada
-                return redirect('detalhes_livro', livro_id=livro_id)
+
+                estoque_pk = aluguel.estoque_fk.id
+                estoque = Estoque.objects.get(pk=estoque_pk)
+                estoque.fk_user = aluguel.user_fk
+                estoque.alugado = True
+                estoque.save()
+                return redirect('livro_adm', livro_id=livro_id)
         else:
-            form = Aluguel()
-        return render(request, 'seu_template_aluguel.html', {'form': form})
+            form = AluguelForm()
+        return render(request, 'accounts/adm/aluguel_adm.html', {'form': form})
     else:
-        
-    return redirect('livro_adm',livro_id=livro_id)
-
-
+        return redirect('livro_adm',livro_id=livro_id)
+    
 
 
 @login_required(login_url='login')

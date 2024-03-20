@@ -12,6 +12,81 @@
 <h1>Pagina do ADM</h1>
 
 
+
+
+
+<div style="width: 600px;">
+    <canvas id="tipoChart"></canvas>
+</div>
+
+<div style="width: 600px;">
+    <canvas id="autorChart"></canvas>
+</div>
+
+<script>
+    // Gráfico dos Tipos de Livro
+    var ctxTipo = document.getElementById('tipoChart').getContext('2d');
+    var tipoChart = new Chart(ctxTipo, {
+        type: 'bar',
+        data: {
+            labels: {{ tipos|safe }},
+            datasets: [{
+                label: 'Tipos de Livro',
+                data: {{ totais|safe }},
+                backgroundColor: [
+                    // Adicione cores conforme necessário
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                ],
+                borderColor: [
+                    // Adicione bordas conforme necessário
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
+
+    // Gráfico de Livros por Autor
+    var ctxAutor = document.getElementById('autorChart').getContext('2d');
+    var autorChart = new Chart(ctxAutor, {
+        type: 'pie',
+        data: {
+            labels: {{ autores|safe }},
+            datasets: [{
+                label: 'Livros por Autor',
+                data: {{ livros_por_autor|safe }},
+                backgroundColor: [
+                    // Adicione cores conforme necessário
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    // Adicione bordas conforme necessário
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
+
+
+
+
+
+{% comment %} 
 <canvas id="tipoChart" width="200" height="200"></canvas>
 <script>
     var ctx = document.getElementById('tipoChart').getContext('2d');
@@ -41,7 +116,7 @@
             }
         }
     });
-</script>
+</script> {% endcomment %}
 
 
 

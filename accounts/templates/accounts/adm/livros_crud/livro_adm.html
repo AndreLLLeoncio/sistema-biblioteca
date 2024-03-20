@@ -4,6 +4,12 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{%static 'accounts/adm/css/livro_adm.css'%}">
+<style>
+    .margem-superior {
+        margin-top: 100px;
+    }
+    
+</style>
 {% endblock %}
 
 
@@ -16,57 +22,59 @@
     </div>
 
     <div class='tela-direita'>
+        <div class='dados margem-superior'>
 
-        <h1>{{ livro.nome }}</h1>
+            <h1>{{ livro.nome }}</h1>
 
-        <p>ISBN: {{ livro.isbn }}</p>
+            <p>ISBN: {{ livro.isbn }}</p>
 
-        <p>Data de Lançamento: {{ livro.data_lançamento }}</p>
+            <p>Data de Lançamento: {{ livro.data_lançamento }}</p>
 
-        <p>Autor: 
-            {%for autor in autores%}
-            {{autor.nome}}</p>
-        {%endfor%}
+            <p>Autor: 
+                {%for autor in autores%}
+                {{autor.nome}}</p>
+            {%endfor%}
 
-        <p>Tipo: {{ livro.tipo }}</p>
-
-
-        <p>Generos: 
-            {%for genero in generos%}
-            {{genero.nome}}</p>
-        {%endfor%}
-
-        <p>Editora: {{ livro.fk_editora.nome }}</p>
-
-        {% include "accounts/adm/livros_crud/adicionar_copia.html" %}
-
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adicionar_edicao">
-            Adicionar Cópia
-        </button>
-        <br>
-        <br>
+            <p>Tipo: {{ livro.tipo }}</p>
 
 
+            <p>Generos: 
+                {%for genero in generos%}
+                {{genero.nome}}</p>
+            {%endfor%}
 
-        {% if copia_disponivel %}
-            <a href="{% url 'alugar_livro' livro.id %}">
-                <button type="button" class="btn btn-primary">Registrar Aluguel</button>
-            </a>
-        {%else%}
-            
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                <p class="card-text">Indisponivel para Aluguel</p>
+            <p>Editora: {{ livro.fk_editora.nome }}</p>
+
+            {% include "accounts/adm/livros_crud/adicionar_copia.html" %}
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adicionar_edicao">
+                Adicionar Cópia
+            </button>
+            <br>
+            <br>
+
+
+
+            {% if copia_disponivel %}
+                <a href="{% url 'alugar_livro' livro.id %}">
+                    <button type="button" class="btn btn-primary">Registrar Aluguel</button>
+                </a>
+            {%else%}
+                
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                    <p class="card-text">Indisponivel para Aluguel</p>
+                    </div>
                 </div>
+            {% endif %}
+
+
+            <br>
+
+            {% for message in messages %}
+                <p id='messages'>{{message}}</p>
+            {% endfor %}
             </div>
-        {% endif %}
-
-
-        <br>
-
-        {% for message in messages %}
-            <p id='messages'>{{message}}</p>
-        {% endfor %}
 
     </div>
     <br>

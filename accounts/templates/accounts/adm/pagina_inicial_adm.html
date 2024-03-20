@@ -13,6 +13,7 @@
         align-items: center; 
     }
 
+
     .div2 {
         width: 50vw;
         height: 90vh;
@@ -24,7 +25,7 @@
         color:black;
     }
 
-    /* Estilos para os gráficos */
+
     .grafico_tipo,
     .grafico_autor {
         width: 60%;
@@ -33,7 +34,7 @@
         display: flex;
         justify-content: center;
         align-items: center; 
-        border-radius: 10px; /* Adicionando bordas arredondadas */
+        border-radius: 10px;
         
     }
 
@@ -46,14 +47,39 @@
         width: 100%;
         height: 100%;
     }
+
+    img{
+        width:70%
+    }
+
+
+    /* Media query para ajustar o layout em telas menores */
+    @media screen and (max-width: 700px) {
+        .div1,
+        .div2 {
+            width: 100%;
+            flex-direction: column; /* Altera a direção do flex container */
+        }
+
+        .grafico_tipo,
+        .grafico_autor {
+            width: 100%; /* Garante que as divs ocupem 100% da largura disponível */
+            height: 45%; /* Ajusta a altura para ocupar metade da altura disponível */
+            margin-bottom: 10px; /* Adiciona um espaçamento entre as divs */
+        }
+
+        .grafico_autor {
+            height: 50%; /* Ajusta a altura da segunda div */
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="pagina">
-    <div class="div1"style="width: 50%;">
+    <div class="div1"style="width: 50%;text-align: center;">
         <div class='container'>
-            <!-- Conteúdo da div1 -->
+            <img src="{% static 'accounts/img/adm_home_img.png'%}" alt="Imagem">
+            <h2>BEM-VINDO {{request.user}}</h2>
         </div>
     </div>
 
@@ -66,7 +92,6 @@
             <canvas id="autorChart" style="width:90%; height: 90%;"></canvas>
         </div>
     </div>
-</div>
 
 
 

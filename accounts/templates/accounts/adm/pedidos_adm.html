@@ -9,15 +9,20 @@
 
 {% block content %}
 
-<h1>Pedidos</h1>
+
 
 <div class='container'>
-<table class="table">
+<br>
+<center>  
+<h1>Pedidos</h1>
+
+<br>
+<table class="table"style="width: 50%">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Usuario</th>
         <th scope="col">Livro</th>
-        <th scope="col"></th>
+        <th scope="col">Visualizar</th>
       </tr>
     </thead>
     <tbody>
@@ -27,13 +32,14 @@
         <td>{{ pedido.nome_livro}}</td>
         <td>
           <a href="{% url 'pedido_adm' pedido.id %}">
-            <i class="fas fa-eye"></i>
+            <i class="fas fa-eye" style="margin-left:15px;"></i>
         </a>
         </td>
       </tr>
       {% endfor%}
     </tbody>
   </table>
+</center>
 </div>
 
 

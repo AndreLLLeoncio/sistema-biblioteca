@@ -2,10 +2,23 @@
     display: flex;
     height: 100%;
     width: 100%;
+    flex-wrap: wrap; /* Adiciona flex-wrap para permitir a quebra para baixo em telas menores */
 }
+
 .left-div, .right-div {
-    flex: 2;
+    flex-basis: 50%; /* Define a base de flex para 50%, então elas sempre ocupam 50% do espaço */
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .left-div, .right-div {
+        flex-basis: 100%; /* Altera a base de flex para 100% em telas menores para que elas ocupem toda a largura */
+    }
+}
+
+
+img{
+    width:100%;
 }

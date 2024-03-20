@@ -48,12 +48,11 @@
                     {{ aluguel.user_fk}}
                 </div>
                 <div class="card-body" style="padding: 5px;">
-                    <h5 class="card-title" style="font-size: 14px; margin-bottom: 5px;">Special title treatment</h5>
-                    <p class="card-text" style="font-size: 12px;">With supporting text below as a natural lead-in to additional content.</p>
-                    
-                    <div class="card-footer text-muted">
-                        <a href="#" class="btn btn-primary" style="font-size: 12px; padding: 5px 5px;">Registrar Devolução</a>
-                      </div>
+                    <h5 class="card-title" style="font-size: 14px; margin-bottom: 5px;">{{ aluguel.estoque_fk.livro_fk.nome}}</h5>
+                    <p class="card-text" style="font-size: 12px;">Data Alugada: {{ aluguel.data_alugada}}</p>
+                    <p class="card-text" style="font-size: 12px;">Prazo Devolução: {{ aluguel.prazo_devolucao}}</p>
+
+                
                 </div>
             </div>
         </div>

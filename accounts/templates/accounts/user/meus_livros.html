@@ -14,19 +14,22 @@
 
 <div class='container'>
 
-    {% if alugueis %}
-    {% for aluguel in alugueis %}
+    {% if alugueis_alugados%}
+    {% for alugado in alugueis_alugados %}
 
         <div class="card">
 
             <div class="card-header">
-                {{ aluguel.prazo_devolucao}}
+                <h6>Prazo Devolução: {{ alugado.prazo_devolucao}}</h6>
             </div>
 
             <div class="card-body">
-                <h5 class="card-title">{{ aluguel.estoque_fk.livro_fk.nome }}</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Livro: {{ alugado.estoque_fk.livro_fk.nome }}</h5>
+                {% for autor in alugado.estoque_fk.livro_fk.fk_autor.all %}
+                    <h6>Autor: {{ autor.nome }}</h6>
+                {% endfor %}
+                <br>
+                <a href="{% url 'livro' alugado.estoque_fk.livro_fk.id %}" class="btn btn-primary">Página do Livro</a>
             </div>
 
         </div>

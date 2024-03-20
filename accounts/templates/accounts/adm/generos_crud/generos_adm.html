@@ -4,23 +4,42 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{%static 'accounts/adm/css/adm_tabelas.css'%}">
+<style>
+  .adicionar-genero-modal{
+    color:black;
+}
+
+</style>
 {% endblock %}
 
 
 {% block content %}
+
+{% include 'accounts/adm/generos_crud/adicionar_genero_adm.html'%}
+{% include 'accounts/adm/deletar.html'%}
 
 <br>
 
 <center>
     <h1>GENEROS</h1>
     <br>
-    <a href="#"><button type="button" class="btn btn-light">Adicionar</button></a>
+    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#adicionarGeneroModal">
+      Cadastrar Genero
+    </button>
 
 </center>
 
 <br>
 
 <div class='container'>
+
+  {% for message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{message}}
+  </div>
+  <br>
+  {% endfor %}
+
     <table class="table">
         <thead class="thead-dark">
           <tr>
@@ -40,11 +59,11 @@
                 <div class='icones'>
 
 
-                    <a href="#">
+                    <a href="{% url 'deletar_genero_adm' genero_id=genero.id %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{genero.id}}">
                         <i class="fas fa-trash" id='deletar'></i>
                     </a>
 
-                    <a href="#">
+                    <a href="{% url 'editar_genero_adm' genero.id %}">
                         <i class="fas fa-pen" id='editar'></i>
                     </a>
 
@@ -57,5 +76,13 @@
         </tbody>
     </table>
 </div>
+
+
+
+
+{% block scripts%} 
+<script src="{% static 'accounts/adm/js/delete.js' %}"></script>
+
+{%endblock%}
 
 {% endblock %}

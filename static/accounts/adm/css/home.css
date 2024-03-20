@@ -1,5 +1,25 @@
+/* .pagina {
+    display: flex;
+}
+
+.div1, .div2 {
+    width: 50%;
+    box-sizing: border-box;
+    border: 10px solid black; 
+}
+
 #tipoChart {
     width: 25%;
     height: 25%; 
     margin: auto;
+}
+
+#autorChart {
+    width: 25%;
+    height: 25%; 
+    margin: auto;
+}
+ */
+.div{
+    height: 50%;
 }

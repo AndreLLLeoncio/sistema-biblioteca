@@ -1,30 +1,80 @@
 {% extends "accounts/adm/base_adm.html" %}
-
-{%load static %}
+{% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'accounts/adm/css/home.css' %}">  
+<link rel="stylesheet" href="{% static 'accounts/adm/css/home.css' %}">
+<style>
+    .div1 {
+        width: 50vw;
+        height: 90vh;
+        float: left;
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+    }
+
+    .div2 {
+        width: 50vw;
+        height: 90vh;
+        float: right;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; 
+        color:black;
+    }
+
+    /* Estilos para os gráficos */
+    .grafico_tipo,
+    .grafico_autor {
+        width: 60%;
+        height: 40%;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        border-radius: 10px; /* Adicionando bordas arredondadas */
+        
+    }
+
+    .grafico_tipo{
+        margin-bottom: 10px;
+    }
+
+    #tipoChart,
+    #autorChart {
+        width: 100%;
+        height: 100%;
+    }
+</style>
 {% endblock %}
 
-
 {% block content %}
+<div class="pagina">
+    <div class="div1"style="width: 50%;">
+        <div class='container'>
+            <!-- Conteúdo da div1 -->
+        </div>
+    </div>
 
-<h1>Pagina do ADM</h1>
-
-
-
-
-
-<div style="width: 600px;">
-    <canvas id="tipoChart"></canvas>
+    <div class="div2"style="width: 50%;">
+        <div class='grafico_tipo' style="width: 60%; height:45%;background-color: white;">
+            <canvas id="tipoChart" style="width: 70%; height: 90%;"></canvas>
+        </div>
+        
+        <div class='grafico_autor' style="width: 45%; height:50%; background-color: white;">
+            <canvas id="autorChart" style="width:90%; height: 90%;"></canvas>
+        </div>
+    </div>
 </div>
 
-<div style="width: 600px;">
-    <canvas id="autorChart"></canvas>
-</div>
+
+
+
+
+
 
 <script>
-    // Gráfico dos Tipos de Livro
     var ctxTipo = document.getElementById('tipoChart').getContext('2d');
     var tipoChart = new Chart(ctxTipo, {
         type: 'bar',
@@ -35,19 +85,30 @@
                 data: {{ totais|safe }},
                 backgroundColor: [
                     // Adicione cores conforme necessário
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 0, 0, 1)',
+                    'rgba(255, 255, 0, 1)',
                 ],
                 borderColor: [
                     // Adicione bordas conforme necessário
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 0, 0, 1)',
+                    'rgba(255, 255, 0, 1)',
                 ],
                 borderWidth: 1
             }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            color: 'white' // Defina a cor do texto da legenda
+                        }
+                    }
+                }
+            }
         }
     });
-
+    
     // Gráfico de Livros por Autor
     var ctxAutor = document.getElementById('autorChart').getContext('2d');
     var autorChart = new Chart(ctxAutor, {
@@ -59,66 +120,38 @@
                 data: {{ livros_por_autor|safe }},
                 backgroundColor: [
                     // Adicione cores conforme necessário
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(0, 255, 0, 1)',
+                    'rgba(255, 0, 0, 1)',
+                    'rgba(255, 255, 0, 1)',
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)',
                     'rgba(255, 159, 64, 0.2)'
                 ],
                 borderColor: [
                     // Adicione bordas conforme necessário
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(0, 255, 0, 1)',
+                    'rgba(255, 0, 0, 1)',
+                    'rgba(255, 255, 0, 1)',
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)',
                     'rgba(255, 159, 64, 0.2)'
                 ],
                 borderWidth: 1
             }]
-        }
-    });
-</script>
-
-
-
-
-
-
-{% comment %} 
-<canvas id="tipoChart" width="200" height="200"></canvas>
-<script>
-    var ctx = document.getElementById('tipoChart').getContext('2d');
-    var tipoChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {{ tipos|safe }},
-            datasets: [{
-                label: 'Número de Livros por Tipo',
-                data: {{ totais|safe }},
-                backgroundColor: [
-                'rgba(255, 0, 0, 0.8)', // Cor para o primeiro tipo
-                'rgba(0, 29, 255, 0.8)', // Cor para o segundo tipo
-                ],
-                borderColor: [
-                'rgba(255, 0, 0, 0.8)', // Borda para o primeiro tipo
-                'rgba(0, 29, 255, 0.8)', // Borda para o segundo tipo
-                ],
-                borderWidth: 1
-            }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            color: 'white' // Defina a cor do texto da legenda
+                        }
+                    }
                 }
             }
         }
     });
-</script> {% endcomment %}
-
-
+</script>
 
 
 {% endblock %}

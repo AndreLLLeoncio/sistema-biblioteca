@@ -6,8 +6,8 @@ from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel, AdicionarAutorAdm, DevolucaoForm, AluguelForm
-from .models import Livro, Pedido, Autor, Genero, Estoque, Aluguel, Devolucao
+from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel, AdicionarAutorAdm, DevolucaoForm, AluguelForm, AdicionarGeneroAdm, AdicionarEditoraAdm
+from .models import Livro, Pedido, Autor, Genero, Estoque, Aluguel, Devolucao, Editora
 from datetime import datetime, timedelta
 from django.db.models import Count
 
@@ -324,16 +324,6 @@ def devolucoes_adm(request):
 
 
 
-@login_required(login_url='login')
-@staff_member_required
-def testes(request):
-    itens = Autor.objects.all()
-    return render(request,'accounts/adm/testes.html', {'itens': itens})
-
-
-
-
-
 
 
 
@@ -350,10 +340,80 @@ def testes(request):
 @staff_member_required
 def generos_adm(request):
     generos = Genero.objects.all()
-    return render(request,'accounts/adm/generos_adm.html', {"generos":generos})
+    if request.method == 'POST':
+        form = AdicionarGeneroAdm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Genero Adicionado com Sucesso ')
+            return redirect('generos_adm')
+    else:
+        form = AdicionarGeneroAdm()
+    return render(request,'accounts/adm/generos_crud/generos_adm.html', {"generos":generos, 'form':form})
+
+@login_required(login_url='login')
+@staff_member_required
+def deletar_genero_adm(request, genero_id):
+    genero = Genero.objects.get(pk=genero_id)
+    genero.delete()
+    messages.success(request, 'Genero Deletado com Sucesso ')
+    return redirect('generos_adm')
+
+def editar_genero_adm(request, genero_id):
+    genero = Genero.objects.get(pk=genero_id)
+    if request.method == 'POST':
+        form = AdicionarGeneroAdm(request.POST, instance=genero)
+        form.save()
+        messages.success(request, 'Genero Editado com Sucesso ')
+        return redirect('editar_genero_adm', genero.pk)
+    else:
+        form = AdicionarGeneroAdm(instance=genero)
+    return render(request, 'accounts/adm/generos_crud/editar_genero_adm.html', {'form': form})
 
 
 
+
+
+
+
+
+
+
+
+
+# ADM  EDITORAS
+
+@login_required(login_url='login')
+@staff_member_required
+def editoras_adm(request):
+    editoras = Editora.objects.all()
+    if request.method == 'POST':
+        form = AdicionarEditoraAdm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Editora Adicionada com Sucesso ')
+            return redirect('editoras_adm')
+    else:
+        form = AdicionarEditoraAdm()
+    return render(request,'accounts/adm/editoras_crud/editoras_adm.html', {"editoras":editoras, 'form':form})
+
+@login_required(login_url='login')
+@staff_member_required
+def deletar_editora_adm(request, editora_id):
+    editora = Editora.objects.get(pk=editora_id)
+    editora.delete()
+    messages.success(request, 'Editora Deletada com Sucesso ')
+    return redirect('editoras_adm')
+
+def editar_editora_adm(request, editora_id):
+    editora = Editora.objects.get(pk=editora_id)
+    if request.method == 'POST':
+        form = AdicionarEditoraAdm(request.POST, instance=editora)
+        form.save()
+        messages.success(request, 'Editora Editada com Sucesso ')
+        return redirect('editar_editora_adm', editora.pk)
+    else:
+        form = AdicionarEditoraAdm(instance=editora)
+    return render(request, 'accounts/adm/editoras_crud/editar_editora_adm.html', {'form': form})
 
 
 
@@ -476,9 +536,9 @@ def pedidoPage(request):
 @login_required(login_url='login')
 def meusLivros(request):
     usuario = request.user
-    alugueis = Aluguel.objects.filter(user_fk = usuario)
+    alugueis_alugados = Aluguel.objects.filter(user_fk = usuario,estoque_fk__alugado=True)
 
-    return render(request,'accounts/user/meus_livros.html', {'alugueis': alugueis})
+    return render(request,'accounts/user/meus_livros.html', {'alugueis_alugados': alugueis_alugados})
 
 
 @login_required(login_url='login')

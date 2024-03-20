@@ -4,26 +4,30 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{%static 'accounts/adm/css/adm_tabelas.css'%}">
+<style>
+  .adicionar-editora-modal{
+    color:black;
+}
+
+</style>
 {% endblock %}
 
 
 {% block content %}
 
-{% include 'accounts/adm/autores_crud/adicionar_autor_adm.html'%}
+{% include 'accounts/adm/editoras_crud/adicionar_editora_adm.html'%}
 {% include 'accounts/adm/deletar.html'%}
-
 
 <br>
 
 <center>
-    <h1>AUTORES</h1>
+    <h1>EDITORAS</h1>
     <br>
-    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#adicionarAutorModal">
-      Cadastrar Autor
+    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#adicionareditoraModal">
+      Cadastrar Genero
     </button>
 
 </center>
-
 
 <br>
 
@@ -35,33 +39,34 @@
   </div>
   <br>
   {% endfor %}
-  
+
     <table class="table">
         <thead class="thead-dark">
           <tr>
             <th scope="col">ID</th>
             <th scope="col">NOME</th>
-            <th scope="col">NASCIMENTO</th>
-            <th scope="col">NACIONALIDADE</th>
-            <th scope="col">AÇÕES</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
-            {% for autor in autores %}
+            {% for editora in editoras %}
           <tr>
-            <td>{{ autor.id}}</td>
-            <td>{{ autor.nome}}</td>
-            <td>{{ autor.data_nascimento}}</td>
-            <td>{{ autor.nacionalidade}}</td>
+            <td>{{ editora.id}}</td>
+            <td>{{ editora.nome}}</td>
+            <td>{{ editora.endereço }}</td>
+            <td>{{ editora.telefone }}</td>
             <td>
                 <div class='icones'>
 
-                    <a href="{% url 'deletar_autor_adm' autor_id=autor.id %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{autor.id}}">
+
+                    <a href="{% url 'deletar_editora_adm' editora_id=editora.id %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{editora.id}}">
                         <i class="fas fa-trash" id='deletar'></i>
                     </a>
 
-                    <a href="{% url 'editar_autor_adm' autor.id %}">
-                      <i class="fas fa-pen" id='editar'></i>
+                    <a href="{% url 'editar_editora_adm' editora.id %}">
+                        <i class="fas fa-pen" id='editar'></i>
                     </a>
 
                 </div>
@@ -73,8 +78,6 @@
         </tbody>
     </table>
 </div>
-
-
 
 
 

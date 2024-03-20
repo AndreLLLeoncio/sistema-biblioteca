@@ -1,0 +1,26 @@
+<div class='adicionar-genero-modal'>
+    <div class="modal fade" id="adicionarGeneroModal" tabindex="-1" role="dialog" aria-labelledby="adicionarGeneroModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+  
+            <div class="modal-header">
+                <h5 class="modal-title" id="adicionarGeneroModalLabel">Cadastrar Genero</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+  
+  
+            <form method="POST">
+              {% csrf_token %}
+              <div class="modal-body">
+                  {{ form.as_p }}
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Confirmar</button>
+              </div>
+          </form>
+  
+  
+          </div>
+        </div>
+    </div>
+  </div>

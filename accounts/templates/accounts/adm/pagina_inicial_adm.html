@@ -3,13 +3,47 @@
 {%load static %}
 
 {% block styles %}
-
+<link rel="stylesheet" href="{% static 'accounts/adm/css/home.css' %}">  
 {% endblock %}
 
 
 {% block content %}
 
 <h1>Pagina do ADM</h1>
+
+
+<canvas id="tipoChart" width="200" height="200"></canvas>
+<script>
+    var ctx = document.getElementById('tipoChart').getContext('2d');
+    var tipoChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ tipos|safe }},
+            datasets: [{
+                label: 'Número de Livros por Tipo',
+                data: {{ totais|safe }},
+                backgroundColor: [
+                'rgba(255, 0, 0, 0.8)', // Cor para o primeiro tipo
+                'rgba(0, 29, 255, 0.8)', // Cor para o segundo tipo
+                ],
+                borderColor: [
+                'rgba(255, 0, 0, 0.8)', // Borda para o primeiro tipo
+                'rgba(0, 29, 255, 0.8)', // Borda para o segundo tipo
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
 
 
 {% endblock %}

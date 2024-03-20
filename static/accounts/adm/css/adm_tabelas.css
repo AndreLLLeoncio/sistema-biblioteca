@@ -1,4 +1,28 @@
+.filtros {
+    display: flex;
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+    gap: 20px; /* Adiciona um espaço entre os itens */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+}
 
+.filtro-autor {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Adiciona centralização horizontal para o filtro-autor */
+}
+
+@media (max-width: 768px) {
+    .filtros {
+        flex-direction: column;
+        justify-content: center; /* Garante que os itens estejam centralizados horizontalmente */
+        align-items: center; /* Centraliza os itens verticalmente */
+    }
+
+    .filtro-autor {
+        width: 100%;
+        justify-content: center; /* Mantém os itens centralizados horizontalmente */
+    }
+}
 
 .icones{
     display: inline-flex;

@@ -92,3 +92,12 @@ class DevolucaoForm(forms.ModelForm):
             estoque.save()
         return instance
 
+
+
+
+class Aluguel(ModelForm):
+
+    class Meta:
+        model = Aluguel
+        fields = ['user_fk', 'dias_alugados']
+

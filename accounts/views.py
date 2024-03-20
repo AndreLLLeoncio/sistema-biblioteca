@@ -9,6 +9,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .forms import CriarUsuarioForm, PedidoForm, EditarUsuarioForm, AdicionarLivroAdm, RegistrarAluguel, AdicionarAutorAdm, DevolucaoForm
 from .models import Livro, Pedido, Autor, Genero, Estoque, Aluguel, Devolucao
 from datetime import datetime, timedelta
+from django.db.models import Count
 
 
 # Create your views here.
@@ -22,7 +23,15 @@ from datetime import datetime, timedelta
 @login_required(login_url='login')
 @staff_member_required
 def pagina_inicial_adm(request):
-    return render(request,'accounts/adm/pagina_inicial_adm.html')
+    dataset = Livro.objects.values('tipo').annotate(total=Count('tipo')).order_by('tipo')
+    tipos = [data['tipo'] for data in dataset]
+    totais = [data['total'] for data in dataset]
+
+    context = {
+        'tipos': tipos,
+        'totais': totais,
+    }
+    return render(request,'accounts/adm/pagina_inicial_adm.html', context)
 
 
 
@@ -86,12 +95,37 @@ def livros_adm(request):
 @staff_member_required
 def livro_adm(request, livro_id):
     livro = Livro.objects.get(pk=livro_id)
+    copia_disponivel = Estoque.objects.filter(livro_fk = livro_id, reservado=False, alugado=False).exists()
     autores = livro.fk_autor.all()
     generos = livro.genero_fk.all()
     if livro is not None:
-        return render(request, 'accounts/adm/livros_crud/livro_adm.html', {'livro': livro, 'autores': autores, 'generos': generos})
+        return render(request, 'accounts/adm/livros_crud/livro_adm.html', {'livro': livro, 'autores': autores, 'generos': generos, 'copia_disponivel':copia_disponivel})
     else:
         raise Http404("Livro NAO Existe")
+
+
+@login_required(login_url='login')
+@staff_member_required
+def alugarLivro(request, livro_id):
+    estoque_disponivel = Estoque.objects.filter(livro_fk=livro_id, reservado=False, alugado=False).order_by('id').first()
+    if estoque_disponivel:
+        if request.method == 'POST':
+            form = Aluguel(request.POST)
+            if form.is_valid():
+                aluguel = form.save(commit=False)
+                aluguel.estoque_fk = estoque_disponivel
+                aluguel.save()
+                # Redirecionar para página de detalhes do livro ou outra página desejada
+                return redirect('detalhes_livro', livro_id=livro_id)
+        else:
+            form = Aluguel()
+        return render(request, 'seu_template_aluguel.html', {'form': form})
+    else:
+        
+    return redirect('livro_adm',livro_id=livro_id)
+
+
+
 
 @login_required(login_url='login')
 @staff_member_required

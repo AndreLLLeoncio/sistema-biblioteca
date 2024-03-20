@@ -47,6 +47,14 @@
         <button type="button" class="btn btn-primary" href="#">
             Registrar Aluguel
         </button>
+        
+
+
+        <br>
+
+        {% for message in messages %}
+            <p id='messages'>{{message}}</p>
+        {% endfor %}
 
     </div>
     <br>

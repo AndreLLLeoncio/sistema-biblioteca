@@ -17,24 +17,27 @@
 <center>
     <h1>LIVROS</h1>
     <br>
+
     <div class='filtros'>
         <form method="GET">
             <input type="text" name="q" placeholder="Buscar por nome do livro">
             <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
 
-        <form method="GET" class="form-inline">
-            <div class="form-group mr-2">
-                <label for="autor" class="mr-2">Filtrar por Autor:</label>
-                <select name="autor" id="autor" class="form-control col-sm-6">
-                    <option value="">Todos os Autores</option>
-                    {% for autor in autores %}
-                        <option value="{{ autor.id }}">{{ autor.nome }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Filtrar</button>
-        </form>
+        <div class='filtro-autor'>
+            <form method="GET" class="form-inline">
+                <div class="form-group mr-2">
+                    <label for="autor" class="mr-2">Filtrar por Autor:</label>
+                    <select name="autor" id="autor" class="form-control col-sm-6">
+                        <option value="">Todos os Autores</option>
+                        {% for autor in autores %}
+                            <option value="{{ autor.id }}">{{ autor.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
+        </div>
     </div>
 
 
